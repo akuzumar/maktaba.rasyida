@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel Kesehatan - Maktabah Rasyida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           VARIABLE & RESET (THEME: CLASSIC ARAB)
+           ========================================= */
+        :root {
+            /* Palette Warna Klasik */
+            --primary-color: #1a4d2e; /* Deep Emerald Green */
+            --secondary-color: #2c1810; /* Dark Wood Brown */
+            --accent-color: #c5a059; /* Metallic Gold */
+            --accent-hover: #e6c278; /* Light Gold */
+            
+            /* Backgrounds */
+            --bg-paper: #f9f7f2; /* Cream Paper */
+            --bg-paper-dark: #f0ebe0; /* Slightly Darker Paper */
+            --card-bg: #ffffff;
+            
+            /* Text */
+            --text-primary: #2c1810;
+            --text-secondary: #5d4037;
+            --text-light: #f9f7f2;
+
+            /* Effects */
+            --gold-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+            --soft-shadow: 0 10px 30px rgba(44, 24, 16, 0.08);
+            --border-gold: 1px solid rgba(197, 160, 89, 0.4);
+            --glass-blur: blur(12px);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            /* Pattern Overlay (Geometris Halus) */
+            --pattern-overlay: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5a059' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-paper);
+            background-image: var(--pattern-overlay);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Typography Override */
+        h1, h2, h3, h4, .logo-text, .page-title, .hero-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .arabic-text-style {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-paper-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        /* =========================================
+           LOADING SCREEN (Sesuai index.html)
+           ========================================= */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-paper);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-logo .logo-text {
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 0px var(--accent-color);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(197, 160, 89, 0.2);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            animation: loading 2s ease-in-out forwards;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* =========================================
+           NAVBAR (Responsif seperti index.html)
+           ========================================= */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            transition: height 0.3s ease;
+            position: relative;
+        }
+        .navbar.scrolled .nav-container { height: 70px; }
+
+        /* Logo */
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .logo-main::first-letter {
+            font-size: 120%;
+            color: var(--accent-color);
+            font-family: 'Amiri', serif;
+        }
+
+        .logo-sub {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Menu Desktop */
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(197, 160, 89, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .nav-link::after {
+            content: '♦'; /* Diamond symbol */
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            color: var(--accent-color);
+            font-size: 10px;
+            transition: var(--transition);
+        }
+        .nav-link:hover::after {
+            transform: translateX(-50%) scale(1);
+            bottom: 2px;
+        }
+
+        /* Dropdown Desktop */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: #fff;
+            border: 1px solid var(--accent-color);
+            border-radius: 0 0 8px 8px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            box-shadow: var(--soft-shadow);
+            z-index: 100;
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .dropdown-item:hover {
+            background: var(--bg-paper);
+            color: var(--primary-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 2rem;
+        }
+
+        /* Buttons */
+        .spotlight-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        .spotlight-btn:hover {
+            background: var(--primary-color);
+            color: var(--accent-color);
+            box-shadow: var(--gold-shadow);
+        }
+
+        /* HAMBURGER MENU (MOBILE TOGGLE) - Sama seperti index.html */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 1001;
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Hamburger Active State Animation */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* =========================================
+           HEADER ARTIKEL KESEHATAN (Responsif)
+           ========================================= */
+        .health-header {
+            padding: 120px 2rem 3rem;
+            text-align: center;
+            background: linear-gradient(rgba(249, 247, 242, 0.9), rgba(249, 247, 242, 0.95)),
+                        var(--pattern-overlay);
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .health-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(197, 160, 89, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 77, 46, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(197, 160, 89, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1.5rem;
+        }
+
+        /* =========================================
+           STATS CONTAINER (Responsif)
+           ========================================= */
+        .health-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 0 1rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(44, 24, 16, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-family: 'Amiri', serif;
+        }
+
+        .stat-label {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           BREADCRUMB (Responsif)
+           ========================================= */
+        .breadcrumb {
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+
+        .breadcrumb-separator {
+            color: var(--accent-color);
+            opacity: 0.5;
+        }
+
+        .breadcrumb-current {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* =========================================
+           ARTICLES CONTAINER (Responsif)
+           ========================================= */
+        .articles-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .filter-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-title i {
+            color: var(--accent-color);
+        }
+
+        .filter-count {
+            background: var(--accent-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            color: var(--bg-paper);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .filter-tag {
+            padding: 0.6rem 1rem;
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 15px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--accent-color);
+            color: var(--bg-paper);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: var(--gold-shadow);
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            box-shadow: var(--soft-shadow);
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(44, 24, 16, 0.15);
+        }
+
+        .article-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(26, 77, 46, 0.05) 0%, rgba(197, 160, 89, 0.05) 100%);
+        }
+
+        .article-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .article-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(197, 160, 89, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            transition: var(--transition);
+        }
+
+        .article-card:hover .article-icon {
+            transform: rotate(15deg) scale(1.1);
+            background: rgba(197, 160, 89, 0.2);
+            box-shadow: var(--gold-shadow);
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            min-height: auto;
+            font-family: 'Cinzel', serif;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .article-author {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .article-year {
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--accent-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-description {
+            color: var(--text-secondary);
+            opacity: 0.9;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            min-height: auto;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            font-size: 0.85rem;
+        }
+
+        .stat-item i {
+            color: var(--accent-color);
+        }
+
+        .article-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            padding: 0.9rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .btn-preview {
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-preview:hover {
+            background: rgba(197, 160, 89, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--gold-shadow);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-paper);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(197, 160, 89, 0.3);
+        }
+
+        /* =========================================
+           SPOTLIGHT SEARCH MODAL (Responsif)
+           ========================================= */
+        .spotlight-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .spotlight-modal.active {
+            display: flex;
+        }
+
+        .spotlight-content {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .spotlight-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: stretch;
+            background: linear-gradient(135deg, rgba(26, 77, 46, 0.1) 0%, rgba(197, 160, 89, 0.1) 100%);
+        }
+
+        .spotlight-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .spotlight-search {
+            width: 100%;
+            position: relative;
+        }
+
+        .spotlight-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .spotlight-input::placeholder {
+            color: rgba(197, 160, 89, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+        }
+
+        .close-spotlight {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .close-spotlight:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(197, 160, 89, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-result-item:hover {
+            background: rgba(197, 160, 89, 0.1);
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .result-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .result-author {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .result-category {
+            display: inline-block;
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--accent-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        /* =========================================
+           MODAL PREVIEW (Responsif)
+           ========================================= */
+        .preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(26, 77, 46, 0.1) 0%, rgba(197, 160, 89, 0.1) 100%);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* =========================================
+           FOOTER (Classic Dark) - Responsif
+           ========================================= */
+        .footer {
+            background: var(--secondary-color);
+            color: var(--bg-paper);
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+        .footer::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 10px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--accent-color),
+                var(--accent-color) 10px,
+                var(--secondary-color) 10px,
+                var(--secondary-color) 20px
+            );
+        }
+
+        .footer-container {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .footer-logo { font-size: 1.8rem; font-family: 'Amiri', serif; color: var(--accent-color); margin-bottom: 1rem; }
+        .footer-description { color: rgba(255,255,255,0.7); line-height: 1.6; font-size: 0.95rem; }
+        
+        .footer-section h3 {
+            color: var(--accent-color); margin-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            display: inline-block; padding-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links li { margin-bottom: 0.7rem; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent-color); padding-left: 5px; }
+
+        .footer-social {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px; margin: 2.5rem auto 0;
+            padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center; color: rgba(255,255,255,0.5); font-size: 0.85rem;
+        }
+
+        .footer-bottom-links {
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Animation delays for cards */
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+        .article-card:nth-child(4) { animation-delay: 0.4s; }
+        .article-card:nth-child(5) { animation-delay: 0.5s; }
+        .article-card:nth-child(6) { animation-delay: 0.6s; }
+        .article-card:nth-child(7) { animation-delay: 0.7s; }
+        .article-card:nth-child(8) { animation-delay: 0.8s; }
+        .article-card:nth-child(9) { animation-delay: 0.9s; }
+        .article-card:nth-child(10) { animation-delay: 1.0s; }
+
+        /* =========================================
+           RESPONSIVE DESIGN - Tablet & Desktop
+           ========================================= */
+        @media (min-width: 768px) {
+            .health-header {
+                padding: 140px 2rem 4rem;
+                margin-top: 80px;
+            }
+
+            .page-title {
+                font-size: 3rem;
+            }
+
+            .page-subtitle {
+                font-size: 1.15rem;
+                padding: 0;
+            }
+
+            .health-stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+                padding: 0 2rem;
+            }
+
+            .articles-container {
+                padding: 4rem 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 2rem;
+            }
+
+            .article-title {
+                font-size: 1.3rem;
+                min-height: 3.5em;
+            }
+
+            .article-description {
+                min-height: 6.5em;
+                -webkit-line-clamp: 4;
+            }
+
+            .article-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filter-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .spotlight-header {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .spotlight-search {
+                margin: 0 1.5rem;
+                flex: 1;
+            }
+
+            .close-spotlight {
+                position: static;
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 3rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .health-header {
+                padding: 160px 2rem 4rem;
+            }
+
+            .page-title {
+                font-size: 3.5rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+
+            .stat-card {
+                padding: 2rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* NAVBAR MOBILE STYLES (Sama seperti index.html) */
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-actions {
+                margin-right: 10px;
+            }
+            
+            .spotlight-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            /* Mobile Menu Container */
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-paper);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+                z-index: 999;
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            /* Nav Links di Mobile */
+            .nav-item {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .nav-link {
+                padding: 1rem 0;
+                width: 100%;
+                justify-content: space-between;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+            
+            .nav-link:hover {
+                background: transparent;
+                color: var(--primary-color);
+            }
+            
+            .nav-link::after {
+                display: none;
+            }
+            
+            /* Dropdown Mobile (Accordion Style) */
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                background: rgba(197, 160, 89, 0.05);
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                border-radius: 4px;
+                width: 100%;
+            }
+            
+            /* Class untuk membuka dropdown di mobile */
+            .nav-item.active .dropdown-menu {
+                max-height: 500px;
+                margin-top: 5px;
+                border: 1px solid rgba(197, 160, 89, 0.2);
+            }
+            
+            .dropdown-item {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Remove margin for mobile */
+            .health-header {
+                margin-top: 60px;
+            }
+        }
+
+        /* Small Phone Extra Adjustment */
+        @media (max-width: 480px) {
+            .health-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .article-title {
+                font-size: 1.1rem;
+            }
+
+            .article-content {
+                padding: 1.2rem;
+            }
+
+            .stat-card {
+                padding: 1.2rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo" id="homeLogo" style="text-decoration:none;">
+                <div class="logo-text">
+                    <span class="logo-main">Maktabah</span>
+                    <span class="logo-sub">Rasyida</span>
+                </div>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link active"><i class="fas fa-newspaper"></i> Artikel</a>
+                    <div class="dropdown-menu">
+                        <a href="artikel-kesehatan.html" class="dropdown-item">Artikel Kesehatan</a>
+                        <a href="artikel-kehutanan.html" class="dropdown-item">Artikel Kehutanan</a>
+                        <a href="artikel-pendidikan.html" class="dropdown-item">Artikel Pendidikan</a>
+                        <a href="artikel-teknologi.html" class="dropdown-item">Artikel Teknologi</a>
+                        <a href="artikel-agama.html" class="dropdown-item">Artikel Agama</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-book-open"></i> Novel</a>
+                    <div class="dropdown-menu">
+                        <a href="novel-islami.html" class="dropdown-item">Novel Islami</a>
+                        <a href="novel-fantasi.html" class="dropdown-item">Novel Fantasi</a>
+                        <a href="novel-sejarah.html" class="dropdown-item">Novel Sejarah</a>
+                        <a href="novel-remaja.html" class="dropdown-item">Novel Remaja</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-landmark"></i> Cerita Rakyat</a>
+                    <div class="dropdown-menu">
+                        <a href="cerita-rakyat-nusantara.html" class="dropdown-item">Nusantara</a>
+                        <a href="cerita-rakyat-dunia-islam.html" class="dropdown-item">Dunia Islam</a>
+                        <a href="cerita-rakyat-dongeng-anak.html" class="dropdown-item">Dongeng Anak</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-graduation-cap"></i> Skripsi</a>
+                    <div class="dropdown-menu">
+                        <a href="skripsi-sains.html" class="dropdown-item">Sains</a>
+                        <a href="skripsi-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="skripsi-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="skripsi-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="skripsi-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-user-graduate"></i> Tesis</a>
+                    <div class="dropdown-menu">
+                        <a href="tesis-sains.html" class="dropdown-item">Sains</a>
+                        <a href="tesis-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="tesis-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="tesis-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="tesis-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-scroll"></i> Disertasi</a>
+                    <div class="dropdown-menu">
+                        <a href="disertasi-sains.html" class="dropdown-item">Sains</a>
+                        <a href="disertasi-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="disertasi-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="disertasi-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="disertasi-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-book"></i> Lainnya</a>
+                    <div class="dropdown-menu">
+                        <a href="buku-pelajaran.html" class="dropdown-item">Buku Pelajaran</a>
+                        <a href="jurnal.html" class="dropdown-item">Jurnal</a>
+                        <a href="koleksi-islam.html" class="dropdown-item">Koleksi Islami</a>
+                        <a href="majalah.html" class="dropdown-item">Majalah</a>
+                        <a href="kamus.html" class="dropdown-item">Kamus</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="nav-actions">
+                    <button class="spotlight-btn" id="spotlightBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="hamburger" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Artikel Kesehatan -->
+    <header class="health-header">
+        <div class="breadcrumb">
+            <div class="breadcrumb-links">
+                <a href="index.html" class="breadcrumb-link">Beranda</a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="#" class="breadcrumb-link">Artikel</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Kesehatan</span>
+            </div>
+        </div>
+        
+        <h1 class="page-title">Artikel Kesehatan</h1>
+        <p class="page-subtitle">Eksplorasi pengetahuan kesehatan terkini dari para ahli. Temukan penelitian, tips kesehatan, dan informasi medis yang dapat diandalkan untuk hidup yang lebih sehat.</p>
+        
+        <div class="health-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalArticles">20</div>
+                <div class="stat-label">Artikel Tersedia</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalAuthors">15</div>
+                <div class="stat-label">Penulis Ahli</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalPages">850</div>
+                <div class="stat-label">Total Halaman</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalDownloads">0</div>
+                <div class="stat-label">Total Download</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="articles-container">
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-header">
+                <h2 class="filter-title"><i class="fas fa-filter"></i> Filter Kategori Kesehatan</h2>
+                <div class="filter-count">20 Artikel</div>
+            </div>
+            <div class="filter-tags">
+                <button class="filter-tag active" data-filter="all">Semua</button>
+                <button class="filter-tag" data-filter="prevention">Pencegahan</button>
+                <button class="filter-tag" data-filter="nutrition">Nutrisi</button>
+                <button class="filter-tag" data-filter="mental">Kesehatan Mental</button>
+                <button class="filter-tag" data-filter="disease">Penyakit</button>
+                <button class="filter-tag" data-filter="fitness">Kebugaran</button>
+                <button class="filter-tag" data-filter="research">Penelitian</button>
+            </div>
+        </section>
+
+        <!-- Articles Grid -->
+        <section class="articles-grid" id="articlesGrid">
+            <!-- Artikel akan di-generate oleh JavaScript -->
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">Maktabah Rasyida</div>
+                <p class="footer-description">Perpustakaan digital dengan nuansa klasik yang menyajikan koleksi pengetahuan untuk hidup yang lebih sehat.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Kategori Kesehatan</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-filter="prevention">Pencegahan</a></li>
+                    <li><a href="#" data-filter="nutrition">Nutrisi</a></li>
+                    <li><a href="#" data-filter="mental">Kesehatan Mental</a></li>
+                    <li><a href="#" data-filter="disease">Penyakit</a></li>
+                    <li><a href="#" data-filter="fitness">Kebugaran</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Bantuan</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Pusat Bantuan</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat Layanan</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Maktabah Rasyida. Hak cipta dilindungi.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat Penggunaan</a>
+                <a href="#">Peta Situs</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Spotlight Search Modal -->
+    <div class="spotlight-modal" id="spotlightModal">
+        <div class="spotlight-content">
+            <div class="spotlight-header">
+                <h3 class="spotlight-title"><i class="fas fa-search"></i> Spotlight Search</h3>
+                <div class="spotlight-search">
+                    <input type="text" class="spotlight-input" id="searchInput" placeholder="Cari artikel kesehatan...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <button class="close-spotlight" id="closeSpotlight">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="no-results">Mulai mengetik untuk mencari artikel...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Data Artikel Kesehatan (Sama seperti sebelumnya)
+        let healthArticles = [
+            {
+                id: 1,
+                title: "Panduan Lengkap Pencegahan COVID-19 di Era Endemi",
+                author: "Dr. Ahmad Fauzi, Sp.PD",
+                year: 2024,
+                category: "prevention",
+                description: "Strategi pencegahan COVID-19 terbaru berdasarkan rekomendasi WHO dan Kemenkes RI, termasuk vaksinasi booster dan protokol kesehatan adaptif.",
+                pages: 32,
+                size: "3.2 MB",
+                icon: "fas fa-shield-virus",
+                pdfUrl: "dummy.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 2,
+                title: "Manajemen Diabetes Tipe 2: Pendekatan Holistik",
+                author: "Dr. Ahmad Fauzi, Sp.PD",
+                year: 2024,
+                category: "disease",
+                description: "Panduan komprehensif pengelolaan diabetes melalui kombinasi farmakoterapi, diet, dan aktivitas fisik.",
+                pages: 45,
+                size: "4.5 MB",
+                icon: "fas fa-dna",
+                pdfUrl: "pdf/diabetes-management-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 3,
+                title: "Kesehatan Mental Digital: Tantangan dan Solusi",
+                author: "Dr. Maya Sari, Sp.KJ",
+                year: 2024,
+                category: "mental",
+                description: "Analisis mendalam tentang dampak teknologi terhadap kesehatan mental dan strategi penanganan berbasis evidence.",
+                pages: 28,
+                size: "2.8 MB",
+                icon: "fas fa-brain",
+                pdfUrl: "pdf/mental-health-digital-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 4,
+                title: "Nutrisi Optimal untuk Performa Atlet",
+                author: "Dr. Budi Santoso, Sp.KO",
+                year: 2024,
+                category: "nutrition",
+                description: "Panduan nutrisi berbasis penelitian untuk meningkatkan performa atlet dan pemulihan pasca-latihan.",
+                pages: 36,
+                size: "3.6 MB",
+                icon: "fas fa-running",
+                pdfUrl: "pdf/nutrition-athlete-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 5,
+                title: "Pencegahan Penyakit Jantung Koroner",
+                author: "Dr. Hendra Gunawan, Sp.JP",
+                year: 2024,
+                category: "prevention",
+                description: "Strategi pencegahan primer dan sekunder penyakit jantung koroner berdasarkan guideline terbaru.",
+                pages: 40,
+                size: "4.0 MB",
+                icon: "fas fa-heart",
+                pdfUrl: "pdf/heart-disease-prevention-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 6,
+                title: "Meditasi dan Kesehatan: Bukti Ilmiah",
+                author: "Dr. Fajar Nugroho, Sp.KJ",
+                year: 2024,
+                category: "mental",
+                description: "Review sistematis tentang manfaat meditasi terhadap kesehatan fisik dan mental berdasarkan penelitian terkini.",
+                pages: 25,
+                size: "2.5 MB",
+                icon: "fas fa-spa",
+                pdfUrl: "pdf/meditation-health-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 7,
+                title: "Diet Plant-Based: Manfaat dan Implementasi",
+                author: "Nurul Hidayah, M.Gizi",
+                year: 2024,
+                category: "nutrition",
+                description: "Panduan praktis implementasi diet plant-based untuk kesehatan optimal dan pencegahan penyakit.",
+                pages: 30,
+                size: "3.0 MB",
+                icon: "fas fa-seedling",
+                pdfUrl: "pdf/plant-based-diet-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 8,
+                title: "Olahraga untuk Lansia: Panduan Aman",
+                author: "Dr. Yoga Pratama, Sp.KO",
+                year: 2024,
+                category: "fitness",
+                description: "Program olahraga yang aman dan efektif untuk lansia untuk menjaga mobilitas dan kualitas hidup.",
+                pages: 22,
+                size: "2.2 MB",
+                icon: "fas fa-user-md",
+                pdfUrl: "pdf/exercise-elderly-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 9,
+                title: "Penelitian Terbaru: Mikrobioma dan Kesehatan",
+                author: "Prof. Dr. Ani Lestari, Ph.D",
+                year: 2024,
+                category: "research",
+                description: "Temuan terbaru tentang peran mikrobiota usus dalam kesehatan sistemik dan pencegahan penyakit.",
+                pages: 38,
+                size: "3.8 MB",
+                icon: "fas fa-microscope",
+                pdfUrl: "pdf/microbiome-research-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 10,
+                title: "Manajemen Stres di Tempat Kerja",
+                author: "Dr. Sari Dewi, Sp.KJ",
+                year: 2024,
+                category: "mental",
+                description: "Strategi efektif untuk mengelola stres kerja dan meningkatkan produktivitas serta wellbeing.",
+                pages: 26,
+                size: "2.6 MB",
+                icon: "fas fa-briefcase-medical",
+                pdfUrl: "pdf/work-stress-management-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 11,
+                title: "Suplementasi Vitamin D: Rekomendasi Terbaru",
+                author: "Dr. Linda Hartati, Sp.PD-KR",
+                year: 2024,
+                category: "nutrition",
+                description: "Update rekomendasi suplementasi vitamin D berdasarkan penelitian terkini dan kondisi geografis Indonesia.",
+                pages: 24,
+                size: "2.4 MB",
+                icon: "fas fa-sun",
+                pdfUrl: "pdf/vitamin-d-supplementation-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 12,
+                title: "Pencegahan Kanker Serviks: Skrining dan Vaksinasi",
+                author: "Dr. Rina Melati, Sp.OG",
+                year: 2024,
+                category: "prevention",
+                description: "Panduan komprehensif pencegahan kanker serviks melalui skrining rutin dan vaksinasi HPV.",
+                pages: 32,
+                size: "3.2 MB",
+                icon: "fas fa-female",
+                pdfUrl: "pdf/cervical-cancer-prevention-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 13,
+                title: "Hipertensi: Diagnosis dan Terapi",
+                author: "Dr. Arifin, Sp.PD",
+                year: 2024,
+                category: "disease",
+                description: "Update diagnosis dan terapi hipertensi berdasarkan guideline terbaru dengan pendekatan personalized.",
+                pages: 35,
+                size: "3.5 MB",
+                icon: "fas fa-heartbeat",
+                pdfUrl: "pdf/hypertension-management-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 14,
+                title: "Yoga untuk Kesehatan Tulang Belakang",
+                author: "Dr. Andi Pratama, Sp.KO",
+                year: 2024,
+                category: "fitness",
+                description: "Program yoga khusus untuk kesehatan tulang belakang dan pencegahan nyeri punggung.",
+                pages: 28,
+                size: "2.8 MB",
+                icon: "fas fa-user-injured",
+                pdfUrl: "pdf/yoga-spine-health-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 15,
+                title: "Penelitian: Gut-Brain Axis dan Mood",
+                author: "Prof. Dr. Bayu Setiawan, Ph.D",
+                year: 2024,
+                category: "research",
+                description: "Temuan terbaru tentang hubungan antara kesehatan usus dan kesehatan mental melalui gut-brain axis.",
+                pages: 42,
+                size: "4.2 MB",
+                icon: "fas fa-brain",
+                pdfUrl: "pdf/gut-brain-research-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 16,
+                title: "Deteksi Dini Kanker Payudara",
+                author: "Dr. Anita Sari, Sp.Rad",
+                year: 2024,
+                category: "prevention",
+                description: "Panduan deteksi dini kanker payudara melalui SADARI dan pemeriksaan radiologi terkini.",
+                pages: 30,
+                size: "3.0 MB",
+                icon: "fas fa-ribbon",
+                pdfUrl: "pdf/breast-cancer-detection-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 17,
+                title: "Nutrisi untuk Imunitas Optimal",
+                author: "Dr. Fitriani, M.Gizi",
+                year: 2024,
+                category: "nutrition",
+                description: "Panduan nutrisi berbasis evidence untuk meningkatkan sistem imun dan ketahanan terhadap infeksi.",
+                pages: 26,
+                size: "2.6 MB",
+                icon: "fas fa-shield-alt",
+                pdfUrl: "pdf/nutrition-immunity-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 18,
+                title: "Sleep Hygiene: Kunci Kesehatan Optimal",
+                author: "Dr. Dewi Anggraeni, Sp.KJ",
+                year: 2024,
+                category: "mental",
+                description: "Praktik sleep hygiene yang efektif untuk meningkatkan kualitas tidur dan kesehatan secara keseluruhan.",
+                pages: 22,
+                size: "2.2 MB",
+                icon: "fas fa-bed",
+                pdfUrl: "pdf/sleep-hygiene-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 19,
+                title: "High-Intensity Interval Training (HIIT)",
+                author: "Dr. Rudi Hermawan, Sp.KO",
+                year: 2024,
+                category: "fitness",
+                description: "Program HIIT yang aman dan efektif untuk kebugaran kardiovaskular dan komposisi tubuh.",
+                pages: 24,
+                size: "2.4 MB",
+                icon: "fas fa-bolt",
+                pdfUrl: "pdf/hiit-training-2024.pdf",
+                downloadCount: 0
+            },
+            {
+                id: 20,
+                title: "Penelitian: Epigenetik dan Penyakit Kronis",
+                author: "Prof. Dr. Agus Santoso, Ph.D",
+                year: 2024,
+                category: "research",
+                description: "Review tentang peran epigenetik dalam perkembangan dan pencegahan penyakit kronis.",
+                pages: 48,
+                size: "4.8 MB",
+                icon: "fas fa-dna",
+                pdfUrl: "pdf/epigenetics-research-2024.pdf",
+                downloadCount: 0
+            }
+        ];
+
+        // State Management
+        const appState = {
+            currentFilter: 'all',
+            totalDownloads: 0,
+            currentPreviewArticle: null
+        };
+
+        // DOM Elements
+        const DOM = {
+            navbar: document.getElementById('navbar'),
+            articlesGrid: document.getElementById('articlesGrid'),
+            filterTags: document.querySelectorAll('.filter-tag'),
+            filterCount: document.querySelector('.filter-count'),
+            totalArticles: document.getElementById('totalArticles'),
+            totalAuthors: document.getElementById('totalAuthors'),
+            totalPages: document.getElementById('totalPages'),
+            totalDownloads: document.getElementById('totalDownloads'),
+            footerFilterLinks: document.querySelectorAll('.footer-links a[data-filter]'),
+            spotlightBtn: document.getElementById('spotlightBtn'),
+            spotlightModal: document.getElementById('spotlightModal'),
+            closeSpotlight: document.getElementById('closeSpotlight'),
+            searchInput: document.getElementById('searchInput'),
+            searchResults: document.getElementById('searchResults'),
+            loadingScreen: document.getElementById('loadingScreen'),
+            hamburgerBtn: document.getElementById('hamburgerBtn'),
+            navMenu: document.getElementById('navMenu')
+        };
+
+        // Helper Functions
+        const Helper = {
+            // Calculate total unique authors
+            calculateUniqueAuthors: () => {
+                const authors = healthArticles.map(article => article.author);
+                const uniqueAuthors = [...new Set(authors)];
+                return uniqueAuthors.length;
+            },
+
+            // Calculate total pages
+            calculateTotalPages: () => {
+                return healthArticles.reduce((total, article) => total + article.pages, 0);
+            },
+
+            // Calculate total downloads
+            calculateTotalDownloads: () => {
+                return healthArticles.reduce((total, article) => total + article.downloadCount, 0);
+            },
+
+            // Search articles
+            searchArticles: (query) => {
+                if (!query.trim()) return [];
+                
+                const searchTerm = query.toLowerCase();
+                return healthArticles.filter(article => {
+                    return (
+                        article.title.toLowerCase().includes(searchTerm) ||
+                        article.author.toLowerCase().includes(searchTerm) ||
+                        article.description.toLowerCase().includes(searchTerm) ||
+                        article.category.toLowerCase().includes(searchTerm)
+                    );
+                });
+            },
+
+            // Animate counter
+            animateCounter: (element, target) => {
+                const current = parseInt(element.textContent) || 0;
+                const increment = Math.ceil((target - current) / 30);
+                let currentValue = current;
+
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= target) {
+                        element.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = currentValue;
+                    }
+                }, 50);
+            }
+        };
+
+        // Initialize Application
+        class HealthArticlesApp {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.initLoadingScreen();
+                this.updateStatistics();
+                this.generateArticles();
+                this.initEventListeners();
+                this.initMobileMenu();
+                this.initNavbar();
+                console.log('Health Articles App Initialized');
+            }
+
+            initLoadingScreen() {
+                setTimeout(() => {
+                    DOM.loadingScreen.style.opacity = '0';
+                    DOM.loadingScreen.style.visibility = 'hidden';
+                }, 1500);
+            }
+
+            initMobileMenu() {
+                // Toggle Hamburger
+                DOM.hamburgerBtn.addEventListener('click', () => {
+                    DOM.hamburgerBtn.classList.toggle('active');
+                    DOM.navMenu.classList.toggle('active');
+                });
+
+                // Klik di luar menu menutup menu
+                document.addEventListener('click', (e) => {
+                    if (!DOM.navMenu.contains(e.target) && !DOM.hamburgerBtn.contains(e.target) && DOM.navMenu.classList.contains('active')) {
+                        DOM.hamburgerBtn.classList.remove('active');
+                        DOM.navMenu.classList.remove('active');
+                    }
+                });
+
+                // Dropdown Mobile Logic (Accordion)
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // Cek jika kita di mode mobile/tablet (lebar < 768px)
+                        if (window.innerWidth <= 768) {
+                            const parent = link.parentElement;
+                            const dropdown = parent.querySelector('.dropdown-menu');
+                            
+                            // Jika item ini punya dropdown
+                            if (dropdown) {
+                                e.preventDefault(); // Jangan refresh/navigasi
+                                parent.classList.toggle('active'); // Buka/tutup class active
+                            }
+                        }
+                    });
+                });
+            }
+
+            initEventListeners() {
+                // Filter tags
+                DOM.filterTags.forEach(tag => {
+                    tag.addEventListener('click', (e) => {
+                        const filter = e.target.dataset.filter;
+                        this.filterArticles(filter);
+                        
+                        // Update active state
+                        DOM.filterTags.forEach(t => t.classList.remove('active'));
+                        e.target.classList.add('active');
+                    });
+                });
+
+                // Footer filter links
+                DOM.footerFilterLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const filter = link.dataset.filter;
+                        this.filterArticles(filter);
+                        
+                        // Update active state in main filter
+                        DOM.filterTags.forEach(t => {
+                            t.classList.remove('active');
+                            if (t.dataset.filter === filter) {
+                                t.classList.add('active');
+                            }
+                        });
+                    });
+                });
+
+                // Navbar scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        DOM.navbar.classList.add('scrolled');
+                    } else {
+                        DOM.navbar.classList.remove('scrolled');
+                    }
+                });
+
+                // Spotlight button
+                if (DOM.spotlightBtn) {
+                    DOM.spotlightBtn.addEventListener('click', () => {
+                        this.openSpotlight();
+                    });
+                }
+
+                // Close spotlight
+                if (DOM.closeSpotlight) {
+                    DOM.closeSpotlight.addEventListener('click', () => {
+                        this.closeSpotlight();
+                    });
+                }
+
+                // Search input
+                if (DOM.searchInput) {
+                    DOM.searchInput.addEventListener('input', (e) => {
+                        this.performSearch(e.target.value);
+                    });
+                    
+                    // Enter key to search
+                    DOM.searchInput.addEventListener('keyup', (e) => {
+                        if (e.key === 'Enter') {
+                            this.performSearch(e.target.value);
+                        }
+                    });
+                }
+
+                // Close spotlight on ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && DOM.spotlightModal.classList.contains('active')) {
+                        this.closeSpotlight();
+                    }
+                });
+            }
+
+            generateArticles() {
+                const articlesHTML = healthArticles.map(article => `
+                    <div class="article-card" data-category="${article.category}" data-id="${article.id}">
+                        <div class="article-header">
+                            <div class="article-icon">
+                                <i class="${article.icon}"></i>
+                            </div>
+                            <h3 class="article-title">${article.title}</h3>
+                            <div class="article-meta">
+                                <span class="article-author">${article.author}</span>
+                                <span class="article-year">${article.year}</span>
+                            </div>
+                        </div>
+                        <div class="article-content">
+                            <p class="article-description">${article.description}</p>
+                            <div class="article-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>${article.pages} halaman</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-download"></i>
+                                    <span>${article.downloadCount} kali diunduh</span>
+                                </div>
+                            </div>
+                            <div class="article-actions">
+                                <button class="btn btn-preview" data-id="${article.id}">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button class="btn btn-download" data-id="${article.id}">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                DOM.articlesGrid.innerHTML = articlesHTML;
+                this.initArticleButtons();
+            }
+
+            initArticleButtons() {
+                // Preview buttons
+                document.querySelectorAll('.btn-preview').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const articleId = parseInt(button.dataset.id);
+                        const article = healthArticles.find(a => a.id === articleId);
+                        if (article) {
+                            this.previewArticle(article);
+                        }
+                    });
+                });
+
+                // Download buttons
+                document.querySelectorAll('.btn-download').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const articleId = parseInt(button.dataset.id);
+                        const article = healthArticles.find(a => a.id === articleId);
+                        if (article) {
+                            this.downloadArticle(article);
+                        }
+                    });
+                });
+
+                // Card click for preview
+                document.querySelectorAll('.article-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.closest('.btn-preview') && !e.target.closest('.btn-download')) {
+                            const articleId = parseInt(card.dataset.id);
+                            const article = healthArticles.find(a => a.id === articleId);
+                            if (article) {
+                                this.previewArticle(article);
+                            }
+                        }
+                    });
+                });
+            }
+
+            filterArticles(filter) {
+                appState.currentFilter = filter;
+                const articles = document.querySelectorAll('.article-card');
+                let visibleCount = 0;
+
+                articles.forEach(article => {
+                    const category = article.dataset.category;
+                    
+                    if (filter === 'all' || category === filter) {
+                        article.style.display = 'block';
+                        visibleCount++;
+                        
+                        // Add animation
+                        article.style.animation = 'fadeInUp 0.6s ease forwards';
+                        article.style.opacity = '0';
+                        article.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            article.style.opacity = '1';
+                            article.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        article.style.opacity = '0';
+                        article.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            article.style.display = 'none';
+                        }, 300);
+                    }
+                });
+
+                // Update filter count
+                DOM.filterCount.textContent = `${visibleCount} Artikel`;
+
+                // Smooth scroll to articles grid
+                DOM.articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            previewArticle(article) {
+                // Create preview modal
+                const modalHTML = `
+                    <div class="preview-modal" id="previewModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">
+                                    <i class="${article.icon}"></i> ${article.title}
+                                </h3>
+                                <button class="close-modal" id="closePreviewModal">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="margin-bottom: 2rem;">
+                                    <h4 style="color: var(--accent-color); margin-bottom: 1rem; font-family: 'Cinzel';">Deskripsi</h4>
+                                    <p style="color: var(--text-secondary); line-height: 1.6;">${article.description}</p>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                                    <div style="background: rgba(197, 160, 89, 0.1); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.3);">
+                                        <div style="color: var(--accent-color); font-size: 0.9rem; margin-bottom: 0.5rem;">Penulis</div>
+                                        <div style="color: var(--primary-color); font-weight: 500;">${article.author}</div>
+                                    </div>
+                                    <div style="background: rgba(197, 160, 89, 0.1); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.3);">
+                                        <div style="color: var(--accent-color); font-size: 0.9rem; margin-bottom: 0.5rem;">Tahun</div>
+                                        <div style="color: var(--primary-color); font-weight: 500;">${article.year}</div>
+                                    </div>
+                                    <div style="background: rgba(197, 160, 89, 0.1); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.3);">
+                                        <div style="color: var(--accent-color); font-size: 0.9rem; margin-bottom: 0.5rem;">Halaman</div>
+                                        <div style="color: var(--primary-color); font-weight: 500;">${article.pages}</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; flex-direction: column;">
+                                    <button onclick="app.downloadArticle(${article.id})" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border: none; border-radius: 8px; color: var(--bg-paper); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                        <i class="fas fa-download"></i> Download PDF
+                                    </button>
+                                    <button onclick="document.getElementById('previewModal').remove(); document.body.style.overflow = 'auto';" style="width: 100%; padding: 1rem; background: rgba(197, 160, 89, 0.1); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 8px; color: var(--text-secondary); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                        <i class="fas fa-times"></i> Tutup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+                document.body.style.overflow = 'hidden';
+
+                // Add close event
+                document.getElementById('closePreviewModal').addEventListener('click', () => {
+                    document.getElementById('previewModal').remove();
+                    document.body.style.overflow = 'auto';
+                });
+            }
+
+            downloadArticle(article) {
+                // Update download count
+                article.downloadCount++;
+                
+                // Update statistics
+                this.updateStatistics();
+                
+                // Update article card
+                this.updateArticleCard(article.id);
+                
+                // Create download notification
+                this.showNotification(`Mengunduh: ${article.title}`, 'success');
+                
+                // Simulate download with actual PDF
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = article.pdfUrl;
+                    link.download = `${article.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                    link.target = '_blank'; // Buka di tab baru jika PDF tidak bisa diunduh langsung
+                    
+                    // Untuk Chrome dan Firefox
+                    if (link.download !== undefined) {
+                        // Browser mendukung download attribute
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        // Fallback untuk browser lama
+                        window.open(article.pdfUrl, '_blank');
+                    }
+                }, 500);
+            }
+
+            updateArticleCard(articleId) {
+                const article = healthArticles.find(a => a.id === articleId);
+                if (!article) return;
+
+                const articleCard = document.querySelector(`.article-card[data-id="${articleId}"]`);
+                if (articleCard) {
+                    const downloadStat = articleCard.querySelector('.stat-item:nth-child(2) span');
+                    if (downloadStat) {
+                        downloadStat.textContent = `${article.downloadCount} kali diunduh`;
+                    }
+                }
+            }
+
+            updateStatistics() {
+                // Calculate statistics
+                const totalArticles = healthArticles.length;
+                const totalAuthors = Helper.calculateUniqueAuthors();
+                const totalPages = Helper.calculateTotalPages();
+                const totalDownloads = Helper.calculateTotalDownloads();
+
+                // Animate counters
+                Helper.animateCounter(DOM.totalArticles, totalArticles);
+                Helper.animateCounter(DOM.totalAuthors, totalAuthors);
+                Helper.animateCounter(DOM.totalPages, totalPages);
+                Helper.animateCounter(DOM.totalDownloads, totalDownloads);
+            }
+
+            openSpotlight() {
+                DOM.spotlightModal.classList.add('active');
+                DOM.searchInput.focus();
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeSpotlight() {
+                DOM.spotlightModal.classList.remove('active');
+                DOM.searchInput.value = '';
+                DOM.searchResults.innerHTML = '<div class="no-results">Mulai mengetik untuk mencari artikel...</div>';
+                document.body.style.overflow = 'auto';
+            }
+
+            performSearch(query) {
+                const results = Helper.searchArticles(query);
+                
+                if (query.trim() === '') {
+                    DOM.searchResults.innerHTML = '<div class="no-results">Mulai mengetik untuk mencari artikel...</div>';
+                    return;
+                }
+                
+                if (results.length === 0) {
+                    DOM.searchResults.innerHTML = '<div class="no-results">Tidak ada artikel yang ditemukan. Coba kata kunci lain.</div>';
+                    return;
+                }
+                
+                const resultsHTML = results.map(article => `
+                    <div class="search-result-item" data-id="${article.id}">
+                        <div class="result-title">${article.title}</div>
+                        <div class="result-author">${article.author}</div>
+                        <span class="result-category">${this.getCategoryName(article.category)}</span>
+                    </div>
+                `).join('');
+                
+                DOM.searchResults.innerHTML = resultsHTML;
+                
+                // Add click events to search results
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const articleId = parseInt(item.dataset.id);
+                        this.openArticleFromSearch(articleId);
+                    });
+                });
+            }
+
+            getCategoryName(category) {
+                const categories = {
+                    'prevention': 'Pencegahan',
+                    'nutrition': 'Nutrisi',
+                    'mental': 'Kesehatan Mental',
+                    'disease': 'Penyakit',
+                    'fitness': 'Kebugaran',
+                    'research': 'Penelitian'
+                };
+                return categories[category] || category;
+            }
+
+            openArticleFromSearch(articleId) {
+                // Close spotlight
+                this.closeSpotlight();
+                
+                // Find and filter to show the article
+                const article = healthArticles.find(a => a.id === articleId);
+                if (article) {
+                    this.filterArticles(article.category);
+                    
+                    // Update active filter
+                    DOM.filterTags.forEach(t => {
+                        t.classList.remove('active');
+                        if (t.dataset.filter === article.category) {
+                            t.classList.add('active');
+                        }
+                    });
+                    
+                    // Scroll to the article
+                    setTimeout(() => {
+                        const articleCard = document.querySelector(`.article-card[data-id="${articleId}"]`);
+                        if (articleCard) {
+                            articleCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Add highlight animation
+                            articleCard.style.boxShadow = '0 0 0 3px var(--accent-color)';
+                            setTimeout(() => {
+                                articleCard.style.boxShadow = '';
+                            }, 2000);
+                        }
+                    }, 500);
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    bottom: 30px;
+                    right: 30px;
+                    background: ${type === 'success' ? 'linear-gradient(135deg, var(--primary-color), var(--accent-color))' : 'rgba(197, 160, 89, 0.9)'};
+                    color: ${type === 'success' ? 'var(--bg-paper)' : 'var(--text-primary)'};
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    z-index: 99999;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+                    animation: slideInRight 0.3s ease;
+                    border: 1px solid rgba(197, 160, 89, 0.3);
+                    max-width: 90%;
+                    word-break: break-word;
+                `;
+
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                document.body.appendChild(notification);
+
+                // Add animation style
+                if (!document.querySelector('#notification-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'notification-style';
+                    style.textContent = `
+                        @keyframes slideInRight {
+                            from {
+                                transform: translateX(100%);
+                                opacity: 0;
+                            }
+                            to {
+                                transform: translateX(0);
+                                opacity: 1;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideInRight 0.3s ease reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            initNavbar() {
+                // Add scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        DOM.navbar.classList.add('scrolled');
+                    } else {
+                        DOM.navbar.classList.remove('scrolled');
+                    }
+                });
+
+                // Initialize dropdowns for desktop
+                if (window.innerWidth > 768) {
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        const link = item.querySelector('.nav-link');
+                        const dropdown = item.querySelector('.dropdown-menu');
+
+                        if (dropdown) {
+                            item.addEventListener('mouseenter', () => {
+                                dropdown.style.opacity = '1';
+                                dropdown.style.visibility = 'visible';
+                                dropdown.style.transform = 'translateY(0)';
+                            });
+
+                            item.addEventListener('mouseleave', () => {
+                                dropdown.style.opacity = '0';
+                                dropdown.style.visibility = 'hidden';
+                                dropdown.style.transform = 'translateY(10px)';
+                            });
+                        }
+                    });
+                }
+            }
+        }
+
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new HealthArticlesApp();
+        });
+
+        // Expose functions for manual addition/removal of articles
+        window.healthArticlesManager = {
+            // Add a new article
+            addArticle: (article) => {
+                article.id = healthArticles.length > 0 ? Math.max(...healthArticles.map(a => a.id)) + 1 : 1;
+                article.downloadCount = article.downloadCount || 0;
+                healthArticles.push(article);
+                
+                // Regenerate articles
+                app.generateArticles();
+                
+                // Update statistics
+                app.updateStatistics();
+                
+                // Show notification
+                app.showNotification(`Artikel "${article.title}" berhasil ditambahkan!`, 'success');
+            },
+            
+            // Remove an article by ID
+            removeArticle: (articleId) => {
+                const index = healthArticles.findIndex(a => a.id === articleId);
+                if (index !== -1) {
+                    const removedArticle = healthArticles[index];
+                    healthArticles.splice(index, 1);
+                    
+                    // Regenerate articles
+                    app.generateArticles();
+                    
+                    // Update statistics
+                    app.updateStatistics();
+                    
+                    // Show notification
+                    app.showNotification(`Artikel "${removedArticle.title}" berhasil dihapus!`, 'success');
+                }
+            },
+            
+            // Get all articles
+            getAllArticles: () => {
+                return [...healthArticles];
+            },
+            
+            // Get statistics
+            getStatistics: () => {
+                return {
+                    totalArticles: healthArticles.length,
+                    totalAuthors: Helper.calculateUniqueAuthors(),
+                    totalPages: Helper.calculateTotalPages(),
+                    totalDownloads: Helper.calculateTotalDownloads()
+                };
+            }
+        };
+    </script>
+</body>
+</html>

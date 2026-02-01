@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maktabah Rasyida - Khazanah Ilmu Klasik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           VARIABLE & RESET (THEME: CLASSIC ARAB)
+           ========================================= */
+        :root {
+            --primary-color: #1a4d2e; 
+            --secondary-color: #2c1810; 
+            --accent-color: #c5a059; 
+            --accent-hover: #e6c278; 
+            --bg-paper: #f9f7f2; 
+            --bg-paper-dark: #f0ebe0; 
+            --card-bg: #ffffff;
+            --text-primary: #2c1810;
+            --text-secondary: #5d4037;
+            --text-light: #f9f7f2;
+            --gold-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+            --soft-shadow: 0 10px 30px rgba(44, 24, 16, 0.08);
+            --border-gold: 1px solid rgba(197, 160, 89, 0.4);
+            --glass-blur: blur(12px);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --pattern-overlay: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5a059' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-paper);
+            background-image: var(--pattern-overlay);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, .logo-text, .hero-title { font-family: 'Cinzel', serif; letter-spacing: 0.5px; }
+        .arabic-text-style { font-family: 'Amiri', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-paper-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 5px; }
+
+        /* LOADING SCREEN */
+        .loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-paper); display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .loading-logo .logo-text { font-size: 3rem; color: var(--primary-color); text-shadow: 1px 1px 0px var(--accent-color); }
+        .progress-bar { width: 200px; height: 3px; background: rgba(197, 160, 89, 0.2); margin: 20px auto; position: relative; }
+        .progress-fill { height: 100%; background: var(--primary-color); width: 0%; animation: loading 2s ease-in-out forwards; position: relative; }
+        .progress-fill::after { content: ''; position: absolute; right: 0; top: -4px; width: 10px; height: 10px; background: var(--accent-color); border-radius: 50%; box-shadow: 0 0 10px var(--accent-color); }
+        @keyframes loading { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); z-index: 1000; transition: var(--transition);
+        }
+        .navbar.scrolled { background: rgba(255, 255, 255, 0.98); padding: 0; border-bottom: 2px solid var(--accent-color); }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 80px; transition: height 0.3s ease; position: relative;
+        }
+        .navbar.scrolled .nav-container { height: 70px; }
+
+        .logo-text { display: flex; flex-direction: column; line-height: 1; }
+        .logo-main { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); position: relative; }
+        .logo-main::first-letter { font-size: 120%; color: var(--accent-color); font-family: 'Amiri', serif; }
+        .logo-sub { font-size: 0.8rem; color: var(--accent-color); letter-spacing: 3px; text-transform: uppercase; font-family: 'Lato', sans-serif; }
+
+        /* Menu Desktop */
+        .nav-menu { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem;
+            color: var(--text-secondary); text-decoration: none; font-weight: 600;
+            border-radius: 4px; transition: var(--transition); position: relative;
+        }
+        .nav-link:hover { color: var(--primary-color); background: rgba(197, 160, 89, 0.1); }
+        .nav-link::after { content: '♦'; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%) scale(0); color: var(--accent-color); font-size: 10px; transition: var(--transition); }
+        .nav-link:hover::after { transform: translateX(-50%) scale(1); bottom: 2px; }
+
+        /* Dropdown Desktop */
+        .nav-item { position: relative; }
+        .dropdown-menu {
+            position: absolute; top: 100%; left: 0; min-width: 220px;
+            background: #fff; border: 1px solid var(--accent-color);
+            border-radius: 0 0 8px 8px; padding: 0.5rem 0;
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: var(--transition); box-shadow: var(--soft-shadow); z-index: 100;
+        }
+        .nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item {
+            display: block; padding: 0.8rem 1.5rem; color: var(--text-secondary);
+            text-decoration: none; border-left: 3px solid transparent; transition: 0.3s;
+        }
+        .dropdown-item:hover { background: var(--bg-paper); color: var(--primary-color); border-left: 3px solid var(--accent-color); padding-left: 2rem; }
+
+        .spotlight-btn {
+            width: 45px; height: 45px; border-radius: 50%; background: transparent;
+            border: 1px solid var(--accent-color); color: var(--primary-color);
+            cursor: pointer; transition: var(--transition); font-size: 1.1rem;
+        }
+        .spotlight-btn:hover { background: var(--primary-color); color: var(--accent-color); box-shadow: var(--gold-shadow); }
+
+        /* HAMBURGER MENU (MOBILE TOGGLE) */
+        .hamburger {
+            display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1001;
+            padding: 10px; border: 1px solid transparent; border-radius: 5px;
+        }
+        .hamburger span {
+            display: block; width: 25px; height: 3px;
+            background-color: var(--primary-color); transition: all 0.3s ease;
+        }
+        /* Hamburger Active State Animation */
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+        /* HERO SECTION */
+        .hero-section { position: relative; padding: 8rem 2rem 5rem; overflow: hidden; }
+        .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
+        .hero-bg-ornament {
+            position: absolute; width: 600px; height: 600px;
+            border: 2px dashed var(--accent-color); border-radius: 50%;
+            top: -100px; right: -100px; opacity: 0.1;
+            animation: rotateSlow 60s linear infinite;
+        }
+        .hero-bg-ornament::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 80%; height: 80%;
+            border: 1px solid var(--primary-color); border-radius: 50%;
+        }
+        @keyframes rotateSlow { 100% { transform: rotate(360deg); } }
+        
+        .hero-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 4rem; }
+        .hero-title { font-size: 4rem; line-height: 1.2; color: var(--primary-color); margin-bottom: 1.5rem; }
+        .highlight { color: var(--accent-color); position: relative; display: inline-block; }
+        .highlight::after {
+            content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 Q 50 10 100 5' stroke='%23c5a059' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: cover; opacity: 0.7;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2.5rem;
+            line-height: 1.8; border-left: 3px solid var(--accent-color); padding-left: 1.5rem;
+        }
+        .hero-stats {
+            display: inline-flex; gap: 2rem; background: #fff; padding: 1.5rem;
+            border-radius: 10px; box-shadow: var(--soft-shadow);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        .stat-item { text-align: center; padding: 0 1rem; }
+        .stat-item:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.1); }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--primary-color); font-family: 'Amiri', serif; }
+        .stat-label { font-size: 0.8rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .floating-book { width: 320px; height: 460px; perspective: 1500px; position: relative; z-index: 2; }
+        .book-cover {
+            width: 100%; height: 100%; background: var(--primary-color);
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: -15px 20px 30px rgba(0,0,0,0.3), inset 4px 0 10px rgba(0,0,0,0.2);
+            position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 2rem; border: 2px solid var(--accent-color);
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px; transform: rotateY(-15deg) rotateX(5deg); transition: transform 0.5s ease;
+        }
+        .floating-book:hover .book-cover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
+        .book-cover::before { content: ''; position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px; border: 1px solid var(--accent-color); border-radius: 2px 10px 10px 2px; }
+        .book-cover .book-title { font-family: 'Amiri', serif; color: var(--accent-color); font-size: 2.5rem; text-align: center; border-bottom: 1px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 10px; }
+
+        /* SECTIONS */
+        .section { padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+        .section-title { display: flex; align-items: center; gap: 1rem; }
+        .section-title i { font-size: 1.5rem; color: var(--accent-color); }
+        .section-title h2 { font-size: 2.2rem; color: var(--primary-color); }
+
+        /* Categories */
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+        .category-card { background: #fff; padding: 2rem 1rem; border-radius: 8px; text-align: center; border: 1px solid transparent; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: var(--transition); position: relative; overflow: hidden; cursor: pointer; }
+        .category-card:hover { transform: translateY(-5px); border-color: rgba(197, 160, 89, 0.3); }
+        .category-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
+
+        /* Books & Carousel */
+        .trending-container { position: relative; }
+        .trending-carousel { display: flex; gap: 2rem; overflow-x: auto; padding: 2rem 1rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .trending-carousel::-webkit-scrollbar { display: none; }
+        .book-card { flex: 0 0 280px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.08); transition: var(--transition); position: relative; border: 1px solid #eee; cursor: pointer; }
+        .book-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(44, 24, 16, 0.15); }
+        .book-image { width: 100%; height: 220px; object-fit: cover; filter: sepia(30%) contrast(90%); transition: 0.5s; }
+        .book-card:hover .book-image { filter: sepia(0%) contrast(100%); }
+        .book-content { padding: 1.5rem; background: #fff; }
+        .book-title { font-size: 1.2rem; color: var(--primary-color); margin-bottom: 0.5rem; font-family: 'Cinzel', serif; font-weight: 700; }
+        .book-author { color: var(--text-secondary); font-size: 0.9rem; font-style: italic; margin-bottom: 1rem; }
+        .trending-badge { position: absolute; top: 10px; left: 10px; background: var(--accent-color); color: #fff; padding: 4px 10px; font-size: 0.7rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 2; }
+        .book-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px solid #eee; padding-top: 0.8rem; }
+        .book-category { font-size: 0.75rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; }
+        .action-btn { background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .action-btn:hover { background: var(--primary-color); border-color: var(--primary-color); color: #fff; }
+
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; background: #fff; border: 1px solid var(--accent-color); color: var(--primary-color); font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 10; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .carousel-btn:hover { background: var(--primary-color); color: #fff; }
+        .carousel-prev { left: -25px; }
+        .carousel-next { right: -25px; }
+
+        /* Recommendations */
+        .recommendations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .recommendation-card { display: flex; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); cursor: pointer; }
+        .recommendation-card:hover { transform: translateY(-5px); box-shadow: var(--soft-shadow); }
+        .recommendation-image { width: 100px; object-fit: cover; filter: sepia(20%); }
+        .recommendation-content { padding: 1rem; flex: 1; }
+
+        /* POPUPS & EXTRAS */
+        .spotlight-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 24, 16, 0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; padding-top: 100px; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .spotlight-overlay.active { opacity: 1; visibility: visible; }
+        .spotlight-container { width: 90%; max-width: 700px; }
+        .spotlight-search-box { background: #fff; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow: hidden; }
+        .search-header { display: flex; align-items: center; padding: 1.5rem; border-bottom: 1px solid #eee; }
+        #spotlightInput { flex: 1; border: none; font-size: 1.2rem; margin: 0 1rem; font-family: 'Lato', sans-serif; outline: none; color: var(--primary-color); }
+        .search-suggestions { padding: 1.5rem; background: var(--bg-paper); max-height: 400px; overflow-y: auto; }
+        .tag { background: #fff; border: 1px solid var(--accent-color); color: var(--text-secondary); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; cursor: pointer; transition: 0.3s; display: inline-block; margin-bottom: 5px; }
+        .tag:hover { background: var(--accent-color); color: #fff; }
+
+        .ad-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; display: none; justify-content: center; align-items: center; }
+        .ad-popup { background: #fff; width: 500px; border-radius: 10px; position: relative; overflow: hidden; border: 4px double var(--accent-color); max-width: 90%; }
+        .close-ad-btn { position: absolute; top: 10px; right: 10px; background: #fff; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary); z-index: 10; }
+        .ad-content { text-align: center; padding: 2rem; }
+        .ad-content img { width: 100%; border-radius: 5px; margin-bottom: 1rem; filter: sepia(20%); }
+
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2rem; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); cursor: pointer; z-index: 1000; transition: 0.3s; }
+        .whatsapp-float:hover { transform: translateY(-5px); }
+        .whatsapp-popup { position: fixed; bottom: 100px; right: 30px; background: #fff; width: 300px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 1rem; z-index: 999; opacity: 0; visibility: hidden; transform: translateY(20px); transition: 0.3s; border: 1px solid #eee; }
+        .whatsapp-popup.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .whatsapp-item { display: flex; gap: 10px; align-items: center; padding: 10px; background: var(--bg-paper); margin-bottom: 5px; border-radius: 5px; text-decoration: none; color: var(--text-primary); transition: 0.2s; }
+        .whatsapp-item:hover { background: #e8f5e9; }
+
+        /* FOOTER */
+        .footer { background: var(--secondary-color); color: var(--bg-paper); padding: 4rem 2rem 2rem; margin-top: 5rem; position: relative; }
+        .footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: repeating-linear-gradient(45deg, var(--accent-color), var(--accent-color) 10px, var(--secondary-color) 10px, var(--secondary-color) 20px); }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; }
+        .footer-logo { font-size: 2rem; font-family: 'Amiri', serif; color: var(--accent-color); margin-bottom: 1rem; }
+        .footer-description { color: rgba(255,255,255,0.7); line-height: 1.6; }
+        .footer-section h3 { color: var(--accent-color); margin-bottom: 1.5rem; border-bottom: 1px solid rgba(197, 160, 89, 0.3); display: inline-block; padding-bottom: 5px; }
+        .footer-links li { margin-bottom: 0.8rem; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-color); padding-left: 5px; }
+        .footer-bottom { max-width: 1400px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        .search-result-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: background-color 0.2s; }
+        .search-result-item:hover { background-color: rgba(197, 160, 89, 0.1); }
+        .search-result-title { font-weight: 600; color: var(--primary-color); margin-bottom: 5px; }
+        .search-result-category { font-size: 0.8rem; color: var(--accent-color); display: inline-block; background: rgba(197, 160, 89, 0.1); padding: 2px 8px; border-radius: 10px; margin-right: 8px; }
+        .search-result-author { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; }
+        .search-result-link { font-size: 0.8rem; color: #666; margin-top: 5px; display: block; }
+
+        /* =========================================
+           RESPONSIVE STYLE (MOBILE & TABLET)
+           ========================================= */
+        @media screen and (max-width: 992px) {
+            /* General Layout */
+            .section { padding: 3rem 1.5rem; }
+            .hero-section { padding: 7rem 1.5rem 3rem; }
+
+            /* Navbar */
+            .hamburger { display: flex; } /* Tampilkan 3 garis */
+            .nav-actions { margin-right: 10px; }
+            .spotlight-btn { width: 40px; height: 40px; font-size: 1rem; }
+            
+            /* Mobile Menu Container */
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Sembunyi di kanan */
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-paper);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+                z-index: 999; /* Dibawah hamburger */
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                right: 0; /* Munculkan menu */
+            }
+
+            /* Nav Links di Mobile */
+            .nav-item { width: 100%; margin-bottom: 0.5rem; }
+            .nav-link { 
+                padding: 1rem 0; 
+                width: 100%; 
+                justify-content: space-between; 
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+            .nav-link:hover { background: transparent; color: var(--primary-color); }
+            .nav-link::after { display: none; } /* Hilangkan ornamen */
+            
+            /* Dropdown Mobile (Accordion Style) */
+            .dropdown-menu {
+                position: static; /* Tidak melayang */
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                background: rgba(197, 160, 89, 0.05);
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                border-radius: 4px;
+                width: 100%;
+            }
+            
+            /* Class untuk membuka dropdown di mobile */
+            .nav-item.active .dropdown-menu {
+                max-height: 500px; /* Cukup besar untuk konten */
+                margin-top: 5px;
+                border: 1px solid rgba(197, 160, 89, 0.2);
+            }
+            
+            .nav-link i.fa-chevron-down {
+                transition: transform 0.3s;
+            }
+            .nav-item.active .nav-link i {
+                color: var(--accent-color);
+            }
+
+            /* Hero Section Mobile */
+            .hero-container { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+            .hero-title { font-size: 2.5rem; margin-top: 1rem; }
+            .hero-subtitle { border-left: none; border-bottom: 2px solid var(--accent-color); padding: 0 0 1rem; margin: 1.5rem auto; width: 80%; }
+            .hero-stats { flex-direction: column; width: 100%; gap: 1rem; }
+            .stat-item:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 1rem; }
+            
+            /* Floating Book Mobile */
+            .floating-book { width: 240px; height: 340px; margin: 0 auto; }
+            .book-cover .book-title { font-size: 2rem; }
+
+            /* Carousel Buttons Mobile */
+            .carousel-btn { display: none; } /* Sembunyikan tombol, gunakan swipe */
+            .book-card { flex: 0 0 240px; } /* Perkecil kartu buku */
+            
+            /* Category Grid */
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+            /* Recommendation */
+            .recommendation-card { flex-direction: column; }
+            .recommendation-image { width: 100%; height: 150px; }
+            
+            /* WhatsApp & Popup */
+            .whatsapp-popup { width: 90%; right: 5%; bottom: 100px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; }
+        }
+
+        /* Small Phone Extra Adjustment */
+        @media screen and (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .ad-popup { width: 95%; }
+            .nav-container { padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <center><div class="logo-text">Maktabah Rasyida</div></center>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="loading-text" style="color: var(--text-secondary); text-align: center;">Memuat khazanah ilmu...</div>
+        </div>
+    </div>
+
+    <div class="ad-popup-overlay" id="adPopup">
+        <div class="ad-popup-container">
+            <div class="ad-popup">
+                <button class="close-ad-btn" id="closeAdBtn"><i class="fas fa-times"></i></button>
+                <div class="ad-content">
+                    <img src="janganmengulangikesalahan.jpg" alt="Promo Maktabah Rasyida">
+                    <div class="ad-text">
+                        <h2 style="font-family: 'Amiri'; color: var(--primary-color);">Ahlan Wa Sahlan</h2>
+                        <p>Nikmati kenyamanan membaca di perpustakaan pribadi Anda.</p>
+                        <p class="ad-subtext">Koleksi 50.000+ buku tersedia untuk Anda</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="spotlight-overlay" id="spotlightOverlay">
+        <div class="spotlight-container">
+            <div class="spotlight-search-box">
+                <div class="search-header">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="spotlightInput" placeholder="Cari kitab, risalah, artikel, novel, atau penulis...">
+                    <button class="close-spotlight" id="closeSpotlight" style="background:none; border:none; cursor:pointer;"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestion-category">
+                        <h4 style="margin-bottom:10px;"><i class="fas fa-fire" style="color:var(--accent-color)"></i> Pencarian Populer</h4>
+                        <div class="suggestion-tags">
+                            <span class="tag">Sejarah Islam</span>
+                            <span class="tag">Fiqih Muamalah</span>
+                            <span class="tag">Sastra Arab</span>
+                            <span class="tag">Novel Islami</span>
+                        </div>
+                    </div>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-options">
+            <div class="whatsapp-header">
+                <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                <button class="close-whatsapp" id="closeWhatsapp" style="border:none; background:none; cursor:pointer;"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="whatsapp-list">
+                <a href="https://wa.me/6281219189448?text=Assalamualaikum" target="_blank" class="whatsapp-item">
+                    <i class="fas fa-question-circle" style="color:#25D366"></i><div><h4>Tanya Jawab</h4><p>Seputar koleksi kitab</p></div>
+                </a>
+                <a href="https://wa.me/6281219189448?text=Assalamualaikum" target="_blank" class="whatsapp-item">
+                    <i class="fas fa-handshake" style="color:#25D366"></i><div><h4>Kerja Sama</h4><p>Wakaf buku & kemitraan</p></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="whatsapp-float" id="whatsappFloat"><i class="fab fa-whatsapp"></i></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" id="homeLogo" style="text-decoration:none;">
+                <div class="logo-text">
+                    <span class="logo-main">Maktabah</span>
+                    <span class="logo-sub">Rasyida</span>
+                </div>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-newspaper"></i> Artikel</a>
+                    <div class="dropdown-menu">
+                        <a href="artikel-kesehatan.html" class="dropdown-item">Artikel Kesehatan</a>
+                        <a href="artikel-kehutanan.html" class="dropdown-item">Artikel Kehutanan</a>
+                        <a href="artikel-pendidikan.html" class="dropdown-item">Artikel Pendidikan</a>
+                        <a href="artikel-teknologi.html" class="dropdown-item">Artikel Teknologi</a>
+                        <a href="artikel-agama.html" class="dropdown-item">Artikel Agama</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-book-open"></i> Novel</a>
+                    <div class="dropdown-menu">
+                        <a href="novel-islami.html" class="dropdown-item">Novel Islami</a>
+                        <a href="novel-fantasi.html" class="dropdown-item">Novel Fantasi</a>
+                        <a href="novel-sejarah.html" class="dropdown-item">Novel Sejarah</a>
+                        <a href="novel-remaja.html" class="dropdown-item">Novel Remaja</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-landmark"></i> Cerita Rakyat</a>
+                    <div class="dropdown-menu">
+                        <a href="cerita-rakyat-nusantara.html" class="dropdown-item">Nusantara</a>
+                        <a href="cerita-rakyat-dunia-islam.html" class="dropdown-item">Dunia Islam</a>
+                        <a href="cerita-rakyat-dongeng-anak.html" class="dropdown-item">Dongeng Anak</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-graduation-cap"></i> Skripsi</a>
+                    <div class="dropdown-menu">
+                        <a href="skripsi-sains.html" class="dropdown-item">Sains</a>
+                        <a href="skripsi-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="skripsi-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="skripsi-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="skripsi-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-user-graduate"></i> Tesis</a>
+                    <div class="dropdown-menu">
+                        <a href="tesis-sains.html" class="dropdown-item">Sains</a>
+                        <a href="tesis-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="tesis-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="tesis-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="tesis-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-scroll"></i> Disertasi</a>
+                    <div class="dropdown-menu">
+                        <a href="disertasi-sains.html" class="dropdown-item">Sains</a>
+                        <a href="disertasi-sosial.html" class="dropdown-item">Sosial</a>
+                        <a href="disertasi-keislaman.html" class="dropdown-item">Keislaman</a>
+                        <a href="disertasi-teknik.html" class="dropdown-item">Teknik</a>
+                        <a href="disertasi-pendidikan.html" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fas fa-book"></i> Lainnya</a>
+                    <div class="dropdown-menu">
+                        <a href="buku-pelajaran.html" class="dropdown-item">Buku Pelajaran</a>
+                        <a href="jurnal.html" class="dropdown-item">Jurnal</a>
+                        <a href="koleksi-islam.html" class="dropdown-item">Koleksi Islami</a>
+                        <a href="majalah.html" class="dropdown-item">Majalah</a>
+                        <a href="kamus.html" class="dropdown-item">Kamus</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="nav-actions">
+                    <button class="spotlight-btn" id="spotlightBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="hamburger" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-background"><div class="hero-bg-ornament"></div></div>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Jelajahi Samudra <br><span class="highlight">Ilmu Pengetahuan</span></h1>
+                    <p class="hero-subtitle">Perpustakaan digital dengan nuansa klasik yang menyajikan lebih dari 50.000 koleksi manuskrip, kitab, artikel, novel, karya ilmiah, dan cerita rakyat dalam satu genggaman.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item"><div class="stat-number" id="totalBooks">0</div><div class="stat-label">Koleksi</div></div>
+                        <div class="stat-item"><div class="stat-number" id="totalUsers">0</div><div class="stat-label">Anggota</div></div>
+                        <div class="stat-item"><div class="stat-number" id="totalDownloads">0</div><div class="stat-label">Diakses</div></div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-book">
+                        <div class="book-cover">
+                            <div class="book-title">Maktabah<br>Rasyida</div>
+                            <div style="color:var(--accent-color); font-size:1.5rem;"><i class="fas fa-book-open"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-fire"></i><h2>Buku Trending</h2></div>
+            </div>
+            <div class="trending-container">
+                <button class="carousel-btn carousel-prev" id="carouselPrev"><i class="fas fa-chevron-left"></i></button>
+                <div class="trending-carousel" id="trendingCarousel"></div>
+                <button class="carousel-btn carousel-next" id="carouselNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-th-large"></i><h2>Kategori Populer</h2></div>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card"><div class="category-icon"><i class="fas fa-newspaper"></i></div><h3>Artikel</h3><p style="color:var(--text-secondary)">0+ artikel</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-book-open"></i></div><h3>Novel</h3><p style="color:var(--text-secondary)">0+ novel</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-graduation-cap"></i></div><h3>Skripsi</h3><p style="color:var(--text-secondary)">0+ skripsi</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-user-graduate"></i></div><h3>Tesis</h3><p style="color:var(--text-secondary)">0+ tesis</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-scroll"></i></div><h3>Disertasi</h3><p style="color:var(--text-secondary)">0+ disertasi</p></div>
+                <div class="category-card"><div class="category-icon"><i class="fas fa-landmark"></i></div><h3>Cerita Rakyat</h3><p style="color:var(--text-secondary)">0+ cerita</p></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-star"></i><h2>Rekomendasi Pembaca</h2></div>
+            </div>
+            <div class="recommendations-grid" id="recommendationsGrid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">Maktabah Rasyida</div>
+                <p class="footer-description">Melestarikan ilmu pengetahuan dengan teknologi masa kini, menghadirkan kebijaksanaan masa lalu untuk generasi masa depan.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon" style="display:inline-block; width:40px; height:40px; background:rgb(255, 255, 255); border-radius:50%; text-align:center; line-height:40px; margin-right:10px;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" style="display:inline-block; width:40px; height:40px; background:rgb(255, 255, 255); border-radius:50%; text-align:center; line-height:40px; margin-right:10px;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" style="display:inline-block; width:40px; height:40px; background:rgb(255, 255, 255); border-radius:50%; text-align:center; line-height:40px;"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Artikel</a></li>
+                    <li><a href="#">Novel</a></li>
+                    <li><a href="#">Cerita Rakyat</a></li>
+                    <li><a href="#">Skripsi</a></li>
+                    <li><a href="#">Tesis</a></li>
+                    <li><a href="#">Disertasi</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Bantuan</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Pusat Bantuan</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat Layanan</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Maktabah Rasyida. Hak cipta dilindungi.</p>
+            <div class="footer-bottom-links">
+                <p style="color: #ffffff;">Kebijakan Privasi, Perlindungan Web, dan Security Web</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Dummy (Sama seperti sebelumnya)
+        const bookData = {
+            trending: [
+                { id: 1, title: "Revolusi Digital (Trending 1)", author: "Dr. Unknown, S.Pd", category: "Artikel", image: "unknown.jpg", rating: 4.8 },
+                { id: 2, title: "Perjalanan Haji (Trending 2)", author: "Siti Khadijah", category: "Novel Islami", image: "unknown.jpg", rating: 4.9 },
+                { id: 3, title: "Analisis Big Data", author: "Prof. Bambang", category: "Skripsi Teknik", image: "unknown.jpg", rating: 4.7 },
+                { id: 4, title: "Metode Mengajar", author: "Dr. Pendidikan", category: "Skripsi Pendidikan", image: "unknown.jpg", rating: 4.6 },
+                { id: 5, title: "Sejarah Peradaban", author: "Ibnu Sejarah", category: "Sejarah", image: "unknown.jpg", rating: 4.8 }
+            ],
+            recommendations: [
+                { id: 6, title: "Teknologi Masa Depan", author: "Dr. Tech", category: "Sains", description: "Membahas masa depan AI dan robotika.", image: "unknown.jpg", downloads: 5600 },
+                { id: 7, title: "Filsafat Ilmu", author: "Prof. Phil", category: "Filsafat", description: "Dasar-dasar filsafat untuk pemula.", image: "unknown.jpg", downloads: 8900 },
+                { id: 8, title: "Ekonomi Syariah", author: "Dr. Econ", category: "Ekonomi", description: "Prinsip ekonomi dalam Islam.", image: "unknown.jpg", downloads: 6700 },
+                { id: 9, title: "Sastra Melayu Klasik", author: "Sastrawan", category: "Sastra", description: "Kumpulan syair dan pantun lama.", image: "unknown.jpg", downloads: 12400 }
+            ],
+            searchData: [
+                { id: 1, title: "Revolusi Digital", category: "Artikel", author: "Dr. Ahmad Rasyid", link: "artikel-teknologi.html" },
+                { id: 2, title: "Perjalanan Spiritual", category: "Novel", author: "Siti Khadijah", link: "novel-islami.html" }
+            ]
+        };
+
+        const DOM = {
+            adPopup: document.getElementById('adPopup'), closeAdBtn: document.getElementById('closeAdBtn'),
+            spotlightBtn: document.getElementById('spotlightBtn'), spotlightOverlay: document.getElementById('spotlightOverlay'),
+            spotlightInput: document.getElementById('spotlightInput'), closeSpotlight: document.getElementById('closeSpotlight'),
+            searchResults: document.getElementById('searchResults'), hamburgerBtn: document.getElementById('hamburgerBtn'),
+            navMenu: document.getElementById('navMenu'), whatsappFloat: document.getElementById('whatsappFloat'),
+            whatsappPopup: document.getElementById('whatsappPopup'), closeWhatsapp: document.getElementById('closeWhatsapp'),
+            navbar: document.getElementById('navbar'), loadingScreen: document.getElementById('loadingScreen'),
+            trendingCarousel: document.getElementById('trendingCarousel'), carouselPrev: document.getElementById('carouselPrev'),
+            carouselNext: document.getElementById('carouselNext'), recommendationsGrid: document.getElementById('recommendationsGrid'),
+            totalBooks: document.getElementById('totalBooks'), totalUsers: document.getElementById('totalUsers'), totalDownloads: document.getElementById('totalDownloads')
+        };
+
+        class MaktabahApp {
+            constructor() { this.init(); }
+            
+            init() {
+                this.initEventListeners();
+                this.initMobileMenu(); // LOGIKA BARU UNTUK MOBILE
+                this.initLoadingScreen();
+                this.generateTrendingBooks();
+                this.generateRecommendations();
+                this.updateStatistics();
+                this.initNavbarScroll();
+                this.initCarousel();
+                this.initCustomCursor();
+            }
+            
+            // FUNGSI BARU: Logic untuk Hamburger & Dropdown Mobile
+            initMobileMenu() {
+                // Toggle Hamburger
+                DOM.hamburgerBtn.addEventListener('click', () => {
+                    DOM.hamburgerBtn.classList.toggle('active');
+                    DOM.navMenu.classList.toggle('active');
+                });
+
+                // Klik di luar menu menutup menu
+                document.addEventListener('click', (e) => {
+                    if (!DOM.navMenu.contains(e.target) && !DOM.hamburgerBtn.contains(e.target) && DOM.navMenu.classList.contains('active')) {
+                        DOM.hamburgerBtn.classList.remove('active');
+                        DOM.navMenu.classList.remove('active');
+                    }
+                });
+
+                // Dropdown Mobile Logic (Accordion)
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // Cek jika kita di mode mobile/tablet (lebar < 992px)
+                        if (window.innerWidth <= 992) {
+                            const parent = link.parentElement;
+                            const dropdown = parent.querySelector('.dropdown-menu');
+                            
+                            // Jika item ini punya dropdown
+                            if (dropdown) {
+                                e.preventDefault(); // Jangan refresh/navigasi
+                                parent.classList.toggle('active'); // Buka/tutup class active
+                            }
+                        }
+                    });
+                });
+            }
+            
+            initEventListeners() {
+                DOM.closeAdBtn.addEventListener('click', () => DOM.adPopup.style.display = 'none');
+                document.getElementById('homeLogo').addEventListener('click', (e) => { e.preventDefault(); DOM.adPopup.style.display = 'flex'; });
+                DOM.spotlightBtn.addEventListener('click', () => { DOM.spotlightOverlay.classList.add('active'); DOM.spotlightInput.focus(); });
+                DOM.closeSpotlight.addEventListener('click', () => DOM.spotlightOverlay.classList.remove('active'));
+                DOM.spotlightOverlay.addEventListener('click', (e) => { if (e.target === DOM.spotlightOverlay) DOM.spotlightOverlay.classList.remove('active'); });
+                DOM.spotlightInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+                DOM.whatsappFloat.addEventListener('click', () => DOM.whatsappPopup.classList.toggle('active'));
+                DOM.closeWhatsapp.addEventListener('click', () => DOM.whatsappPopup.classList.remove('active'));
+            }
+
+            handleSearch(query) {
+                query = query.toLowerCase();
+                if (!query) { DOM.searchResults.innerHTML = ''; return; }
+                const results = bookData.searchData.filter(i => i.title.toLowerCase().includes(query) || i.category.toLowerCase().includes(query));
+                DOM.searchResults.innerHTML = results.length ? results.map(i => `
+                    <div class="search-result-item" onclick="alert('Ke halaman: ${i.link}')">
+                        <div class="search-result-title">${i.title}</div>
+                        <div class="search-result-category">${i.category}</div>
+                    </div>`).join('') : '<div style="padding:10px">Tidak ditemukan</div>';
+            }
+
+            initCustomCursor() {
+                const c = document.querySelector('.cursor'), f = document.querySelector('.cursor-follower');
+                if(window.innerWidth > 992) { // Kursor hanya aktif di desktop
+                    document.addEventListener('mousemove', e => { c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px'; setTimeout(() => { f.style.left = e.clientX+'px'; f.style.top = e.clientY+'px'; }, 80); });
+                }
+            }
+
+            initLoadingScreen() {
+                setTimeout(() => { DOM.loadingScreen.style.opacity = '0'; DOM.loadingScreen.style.visibility = 'hidden'; 
+                if(!localStorage.getItem('adShown')) { setTimeout(() => { DOM.adPopup.style.display = 'flex'; localStorage.setItem('adShown', 'true'); }, 500); } }, 2000);
+            }
+
+            generateTrendingBooks() {
+                DOM.trendingCarousel.innerHTML = bookData.trending.map(b => `
+                    <div class="book-card">
+                        <div class="trending-badge"><i class="fas fa-fire"></i> TRENDING</div>
+                        <img src="${b.image}" class="book-image" alt="${b.title}">
+                        <div class="book-content"><h3 class="book-title">${b.title}</h3><div class="book-author">${b.author}</div><span class="book-category">${b.category}</span></div>
+                    </div>`).join('');
+            }
+
+            generateRecommendations() {
+                DOM.recommendationsGrid.innerHTML = bookData.recommendations.map(b => `
+                    <div class="recommendation-card">
+                        <img src="${b.image}" class="recommendation-image" alt="${b.title}">
+                        <div class="recommendation-content">
+                            <h3>${b.title}</h3><p style="font-size:0.8rem; color:#666">${b.description}</p>
+                            <div style="margin-top:5px; font-size:0.8rem; color:var(--accent-color)">${b.category}</div>
+                        </div>
+                    </div>`).join('');
+            }
+
+            updateStatistics() {
+                const animate = (el, target) => {
+                    let start = 0, inc = target/100;
+                    let timer = setInterval(() => { start += inc; if(start >= target) { el.innerText = target.toLocaleString()+'+'; clearInterval(timer); } else el.innerText = Math.floor(start).toLocaleString()+'+'; }, 20);
+                };
+                animate(DOM.totalBooks, 50000); animate(DOM.totalUsers, 25000); animate(DOM.totalDownloads, 1200000);
+            }
+
+            initNavbarScroll() { window.addEventListener('scroll', () => DOM.navbar.classList.toggle('scrolled', window.scrollY > 50)); }
+
+            initCarousel() {
+                DOM.carouselPrev.addEventListener('click', () => DOM.trendingCarousel.scrollLeft -= 300);
+                DOM.carouselNext.addEventListener('click', () => DOM.trendingCarousel.scrollLeft += 300);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new MaktabahApp());
+    </script>
+</body>
+</html>

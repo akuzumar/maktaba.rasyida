@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel Kesehatan - Maktabah Rasyida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles khusus untuk halaman artikel kesehatan */
+        :root {
+            --health-primary: #00cc99;
+            --health-secondary: #33ccff;
+        }
+
+        .articles-header {
+            padding: 120px 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 10, 26, 0.9), rgba(15, 35, 40, 0.9));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .articles-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 204, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(51, 204, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .articles-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--health-primary), var(--health-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .articles-subtitle {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .articles-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .article-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 204, 153, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .article-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 204, 153, 0.05);
+        }
+        
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            min-height: 3.4em;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .article-author {
+            color: var(--health-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .article-year {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+        }
+        
+        .article-content {
+            padding: 1.5rem;
+        }
+        
+        .article-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 6.4em;
+        }
+        
+        .article-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .article-pages, .article-size {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .article-pages i, .article-size i {
+            color: var(--health-secondary);
+        }
+        
+        .article-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-preview {
+            background: rgba(0, 204, 153, 0.1);
+            color: var(--health-primary);
+            border: 1px solid rgba(0, 204, 153, 0.3);
+        }
+        
+        .btn-preview:hover {
+            background: rgba(0, 204, 153, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-download {
+            background: linear-gradient(45deg, var(--health-primary), var(--health-secondary));
+            color: white;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 204, 153, 0.3);
+        }
+        
+        .health-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 204, 153, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--health-primary);
+            border: 1px solid rgba(0, 204, 153, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover .health-icon {
+            transform: rotate(15deg) scale(1.1);
+            background: rgba(0, 204, 153, 0.2);
+        }
+        
+        .filter-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+        
+        .filter-count {
+            color: var(--health-primary);
+            background: rgba(0, 204, 153, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(0, 204, 153, 0.1);
+            color: var(--health-primary);
+            border-color: rgba(0, 204, 153, 0.3);
+        }
+        
+        .pdf-preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .pdf-preview-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .pdf-preview-container {
+            width: 90%;
+            height: 90%;
+            background: rgba(30, 30, 50, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pdf-preview-header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .pdf-preview-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pdf-preview-title i {
+            color: #ff6b6b;
+        }
+        
+        .pdf-preview-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pdf-preview-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .pdf-preview-content {
+            flex: 1;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-viewer-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-viewer-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: white;
+        }
+
+        .pdf-viewer-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 30, 50, 0.95);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .pdf-viewer-loading i {
+            font-size: 4rem;
+            color: #ff6b6b;
+            margin-bottom: 2rem;
+        }
+
+        .pdf-viewer-loading h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .pdf-viewer-loading p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .pdf-viewer-actions {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .breadcrumb {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            margin-top: 1rem;
+        }
+        
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: var(--health-primary);
+        }
+        
+        .breadcrumb-separator {
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb-current {
+            color: var(--health-primary);
+            font-weight: 600;
+        }
+
+        .articles-stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .article-stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            min-width: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .article-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--health-primary), var(--health-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .articles-header {
+                padding: 100px 1rem 3rem;
+            }
+            
+            .articles-title {
+                font-size: 2.2rem;
+            }
+            
+            .articles-container {
+                padding: 1rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                width: 100%;
+            }
+            
+            .article-actions {
+                flex-direction: column;
+            }
+
+            .articles-stats-container {
+                gap: 1.5rem;
+            }
+
+            .article-stat-item {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .article-stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animasi untuk kartu artikel */
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+        .article-card:nth-child(4) { animation-delay: 0.4s; }
+        .article-card:nth-child(5) { animation-delay: 0.5s; }
+        .article-card:nth-child(6) { animation-delay: 0.6s; }
+        .article-card:nth-child(7) { animation-delay: 0.7s; }
+        .article-card:nth-child(8) { animation-delay: 0.8s; }
+        .article-card:nth-child(9) { animation-delay: 0.9s; }
+        .article-card:nth-child(10) { animation-delay: 1.0s; }
+        .article-card:nth-child(11) { animation-delay: 1.1s; }
+        .article-card:nth-child(12) { animation-delay: 1.2s; }
+        .article-card:nth-child(13) { animation-delay: 1.3s; }
+        .article-card:nth-child(14) { animation-delay: 1.4s; }
+        .article-card:nth-child(15) { animation-delay: 1.5s; }
+        .article-card:nth-child(16) { animation-delay: 1.6s; }
+        .article-card:nth-child(17) { animation-delay: 1.7s; }
+        .article-card:nth-child(18) { animation-delay: 1.8s; }
+        .article-card:nth-child(19) { animation-delay: 1.9s; }
+        .article-card:nth-child(20) { animation-delay: 2.0s; }
+    </style>
+</head>
+<body>
+    <!-- Loading Skeleton -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-text loading-glow">Maktabah Rasyida</div>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="loading-text">Memuat artikel kesehatan...</div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Spotlight Search (sama dengan halaman utama) -->
+    <div class="spotlight-overlay" id="spotlightOverlay">
+        <div class="spotlight-container">
+            <div class="spotlight-search-box">
+                <div class="search-header">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="spotlightInput" placeholder="Cari artikel kesehatan, penulis, atau topik...">
+                    <button class="close-spotlight" id="closeSpotlight">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestion-category">
+                        <h4><i class="fas fa-fire"></i> Pencarian Populer Kesehatan</h4>
+                        <div class="suggestion-tags">
+                            <span class="tag">COVID-19</span>
+                            <span class="tag">Diabetes</span>
+                            <span class="tag">Kesehatan Mental</span>
+                            <span class="tag">Gizi Seimbang</span>
+                        </div>
+                    </div>
+                    <div class="search-results" id="searchResults">
+                        <!-- Hasil pencarian akan ditampilkan di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Popup (sama dengan halaman utama) -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-options">
+            <div class="whatsapp-header">
+                <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                <button class="close-whatsapp" id="closeWhatsapp">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="whatsapp-list">
+                <a href="https://wa.me/6281234567890?text=Halo%20Maktabah%20Rasyida,%20saya%20ingin%20bertanya%20tentang%20artikel%20kesehatan..." 
+                   target="_blank" class="whatsapp-item">
+                    <i class="fas fa-question-circle"></i>
+                    <div>
+                        <h4>Konsultasi Kesehatan</h4>
+                        <p>Tanya jawab seputar kesehatan</p>
+                    </div>
+                </a>
+                <a href="https://wa.me/6281234567891?text=Halo,%20saya%20ingin%20berkontribusi%20artikel%20kesehatan..." 
+                   target="_blank" class="whatsapp-item">
+                    <i class="fas fa-user-md"></i>
+                    <div>
+                        <h4>Kontributor Artikel</h4>
+                        <p>Kirim artikel kesehatan Anda</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Icon -->
+    <div class="whatsapp-float" id="whatsappFloat">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+    </div>
+
+    <!-- Navbar (sama persis dengan index.html) -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo" id="homeLogo">
+                <div class="logo-text">
+                    <span class="logo-main">Maktabah</span>
+                    <span class="logo-sub">Rasyida</span>
+                </div>
+                <div class="logo-glow"></div>
+            </a>
+
+            <!-- Menu Navigasi -->
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Artikel</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="artikel-kesehatan.html" class="dropdown-item">Artikel Kesehatan</a>
+                        <a href="#" class="dropdown-item">Artikel Kehutanan</a>
+                        <a href="#" class="dropdown-item">Artikel Pendidikan</a>
+                        <a href="#" class="dropdown-item">Artikel Teknologi</a>
+                        <a href="#" class="dropdown-item">Artikel Agama</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <span>Novel</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Novel Islami</a>
+                        <a href="#" class="dropdown-item">Novel Fantasi</a>
+                        <a href="#" class="dropdown-item">Novel Sejarah</a>
+                        <a href="#" class="dropdown-item">Novel Remaja</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-landmark"></i>
+                        <span>Cerita Rakyat</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Nusantara</a>
+                        <a href="#" class="dropdown-item">Dunia Islam</a>
+                        <a href="#" class="dropdown-item">Dongeng Anak</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Skripsi</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Sains</a>
+                        <a href="#" class="dropdown-item">Sosial</a>
+                        <a href="#" class="dropdown-item">Keislaman</a>
+                        <a href="#" class="dropdown-item">Teknik</a>
+                        <a href="#" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Tesis</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Sains</a>
+                        <a href="#" class="dropdown-item">Sosial</a>
+                        <a href="#" class="dropdown-item">Keislaman</a>
+                        <a href="#" class="dropdown-item">Teknik</a>
+                        <a href="#" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-scroll"></i>
+                        <span>Disertasi</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Sains</a>
+                        <a href="#" class="dropdown-item">Sosial</a>
+                        <a href="#" class="dropdown-item">Keislaman</a>
+                        <a href="#" class="dropdown-item">Teknik</a>
+                        <a href="#" class="dropdown-item">Pendidikan</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Lainnya</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Buku Pelajaran</a>
+                        <a href="#" class="dropdown-item">Jurnal</a>
+                        <a href="#" class="dropdown-item">Koleksi Islami</a>
+                        <a href="#" class="dropdown-item">Majalah</a>
+                        <a href="#" class="dropdown-item">Kamus</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spotlight Search Icon -->
+            <div class="nav-actions">
+                <button class="spotlight-btn" id="spotlightBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="user-actions">
+                    <button class="user-btn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Artikel Kesehatan -->
+    <header class="articles-header">
+        <div class="breadcrumb">
+            <div class="breadcrumb-links">
+                <a href="index.html" class="breadcrumb-link">Beranda</a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="index.html" class="breadcrumb-link">Artikel</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Kesehatan</span>
+            </div>
+        </div>
+        
+        <h1 class="articles-title">Artikel Kesehatan</h1>
+        <p class="articles-subtitle">Kumpulan 20 artikel kesehatan terbaru dari berbagai ahli dan peneliti. Temukan penelitian, tips kesehatan, dan informasi medis terkini dalam format PDF yang dapat di-preview dan di-download.</p>
+        
+        <div class="articles-stats-container">
+            <div class="article-stat-item">
+                <div class="article-stat-number" id="totalArticlesHealth">20</div>
+                <div class="article-stat-label">Artikel Kesehatan</div>
+            </div>
+            <div class="article-stat-item">
+                <div class="article-stat-number" id="totalAuthorsHealth">15</div>
+                <div class="article-stat-label">Penulis Ahli</div>
+            </div>
+            <div class="article-stat-item">
+                <div class="article-stat-number" id="totalPagesHealth">850</div>
+                <div class="article-stat-label">Total Halaman</div>
+            </div>
+            <div class="article-stat-item">
+                <div class="article-stat-number" id="totalDownloadsHealth">0</div>
+                <div class="article-stat-label">Total Download</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Artikel -->
+    <section class="articles-container">
+        <div class="filter-container">
+            <div class="filter-header">
+                <h2 class="filter-title">Filter Kategori</h2>
+                <div class="filter-count">20 Artikel</div>
+            </div>
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="medis">Kedokteran</button>
+                <button class="filter-btn" data-filter="gizi">Gizi & Nutrisi</button>
+                <button class="filter-btn" data-filter="jiwa">Kesehatan Jiwa</button>
+                <button class="filter-btn" data-filter="pencegahan">Pencegahan</button>
+                <button class="filter-btn" data-filter="penyakit">Penyakit</button>
+                <button class="filter-btn" data-filter="olahraga">Olahraga & Kebugaran</button>
+            </div>
+        </div>
+
+        <!-- Grid Artikel -->
+        <div class="articles-grid" id="articlesGrid">
+            <!-- Artikel akan dimuat oleh JavaScript -->
+        </div>
+    </section>
+
+    <!-- PDF Preview Modal -->
+    <div class="pdf-preview-modal" id="pdfPreviewModal">
+        <div class="pdf-preview-container">
+            <div class="pdf-preview-header">
+                <h2 class="pdf-preview-title">
+                    <i class="fas fa-file-pdf"></i>
+                    <span id="pdfPreviewTitle">Preview PDF</span>
+                </h2>
+                <button class="pdf-preview-close" id="pdfPreviewClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="pdf-preview-content">
+                <div class="pdf-viewer-container">
+                    <div class="pdf-viewer-loading" id="pdfViewerLoading">
+                        <i class="fas fa-file-pdf"></i>
+                        <h3 id="pdfLoadingTitle">Memuat PDF...</h3>
+                        <p>Preview PDF sedang dimuat. Tunggu sebentar atau download langsung menggunakan tombol di bawah.</p>
+                    </div>
+                    <iframe class="pdf-viewer-iframe" id="pdfViewerIframe" style="display: none;"></iframe>
+                </div>
+            </div>
+            <div class="pdf-viewer-actions">
+                <button class="btn btn-download" id="pdfModalDownload">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+                <button class="btn btn-preview" id="pdfModalClose">
+                    <i class="fas fa-times"></i> Tutup Preview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">Maktabah Rasyida</div>
+                <p class="footer-description">Perpustakaan digital futuristik dengan teknologi terkini untuk pengalaman membaca yang tak terlupakan.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="artikel-kesehatan.html">Artikel Kesehatan</a></li>
+                    <li><a href="#">Artikel Kehutanan</a></li>
+                    <li><a href="#">Artikel Pendidikan</a></li>
+                    <li><a href="#">Artikel Teknologi</a></li>
+                    <li><a href="#">Artikel Agama</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Bantuan</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Pusat Bantuan</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat Layanan</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Berlangganan</h3>
+                <p>Dapatkan notifikasi artikel kesehatan terbaru langsung ke email Anda</p>
+                <div class="subscribe-form">
+                    <input type="email" placeholder="Email Anda" class="subscribe-input">
+                    <button class="subscribe-btn">Berlangganan</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Maktabah Rasyida. Semua hak dilindungi.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat Penggunaan</a>
+                <a href="#">Peta Situs</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Artikel Kesehatan
+        const healthArticles = [
+            {
+                id: 1,
+                title: "Pandemi COVID-19: Dampak dan Penanganan di Indonesia",
+                author: "Dr. Ahmad Fauzi, Sp.PD",
+                year: 2023,
+                category: "medis",
+                description: "Analisis komprehensif tentang perkembangan pandemi COVID-19 di Indonesia, strategi penanganan, serta dampak terhadap sistem kesehatan nasional.",
+                pages: 24,
+                size: "2.4 MB",
+                icon: "fas fa-virus",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1250
+            },
+            {
+                id: 2,
+                title: "Gizi Seimbang untuk Lansia di Era Modern",
+                author: "Prof. Dr. Siti Rahayu, M.Gizi",
+                year: 2023,
+                category: "gizi",
+                description: "Panduan lengkap tentang kebutuhan gizi lansia dengan pendekatan modern untuk menjaga kualitas hidup di usia senja.",
+                pages: 18,
+                size: "1.8 MB",
+                icon: "fas fa-apple-alt",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 890
+            },
+            {
+                id: 3,
+                title: "Kesehatan Mental di Era Digital: Tantangan dan Solusi",
+                author: "Dr. Maya Sari, Sp.KJ",
+                year: 2022,
+                category: "jiwa",
+                description: "Penelitian tentang dampak penggunaan teknologi digital terhadap kesehatan mental dan strategi penanganannya.",
+                pages: 22,
+                size: "2.1 MB",
+                icon: "fas fa-brain",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1560
+            },
+            {
+                id: 4,
+                title: "Diabetes Mellitus Tipe 2: Pencegahan dan Manajemen",
+                author: "Dr. Budi Santoso, Sp.PD-KEMD",
+                year: 2023,
+                category: "penyakit",
+                description: "Panduan praktis tentang pencegahan dan manajemen Diabetes Mellitus Tipe 2 berdasarkan evidence-based medicine.",
+                pages: 30,
+                size: "3.0 MB",
+                icon: "fas fa-dna",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 2100
+            },
+            {
+                id: 5,
+                title: "Vaksinasi: Pentingnya Imunisasi dari Bayi Hingga Lansia",
+                author: "Dr. Rina Wijaya, Sp.A",
+                year: 2023,
+                category: "pencegahan",
+                description: "Artikel komprehensif tentang pentingnya vaksinasi dalam pencegahan penyakit menular.",
+                pages: 20,
+                size: "2.0 MB",
+                icon: "fas fa-shield-virus",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1750
+            },
+            {
+                id: 6,
+                title: "Olahraga untuk Penderita Hipertensi: Panduan Aman",
+                author: "Dr. Andi Pratama, Sp.KO",
+                year: 2022,
+                category: "olahraga",
+                description: "Panduan olahraga yang aman dan efektif untuk penderita hipertensi.",
+                pages: 16,
+                size: "1.6 MB",
+                icon: "fas fa-running",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 920
+            },
+            {
+                id: 7,
+                title: "Diet Plant-Based: Manfaat Kesehatan dan Implementasi",
+                author: "Nurul Hidayah, M.Gizi",
+                year: 2023,
+                category: "gizi",
+                description: "Analisis ilmiah tentang manfaat diet berbasis nabati untuk pencegahan penyakit kronis.",
+                pages: 25,
+                size: "2.5 MB",
+                icon: "fas fa-seedling",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1340
+            },
+            {
+                id: 8,
+                title: "Tuberkulosis: Diagnosis dan Terapi Terkini",
+                author: "Dr. Arifin, Sp.P",
+                year: 2023,
+                category: "medis",
+                description: "Update terbaru tentang diagnosis dan terapi Tuberkulosis, termasuk TB resisten obat.",
+                pages: 28,
+                size: "2.8 MB",
+                icon: "fas fa-lungs",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1100
+            },
+            {
+                id: 9,
+                title: "Gangguan Tidur: Penyebab dan Penanganan Holistik",
+                author: "Dr. Sari Dewi, Sp.KJ",
+                year: 2022,
+                category: "jiwa",
+                description: "Pendekatan holistik untuk memahami dan menangani berbagai gangguan tidur.",
+                pages: 19,
+                size: "1.9 MB",
+                icon: "fas fa-bed",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 980
+            },
+            {
+                id: 10,
+                title: "Kebersihan Tangan: Intervensi Sederhana dengan Dampak Besar",
+                author: "Dr. Fitriani, M.Kes",
+                year: 2023,
+                category: "pencegahan",
+                description: "Studi tentang pentingnya kebersihan tangan dalam pencegahan infeksi nosokomial.",
+                pages: 15,
+                size: "1.5 MB",
+                icon: "fas fa-hand-sparkles",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 850
+            },
+            {
+                id: 11,
+                title: "Penyakit Jantung Koroner: Faktor Risiko dan Pencegahan Primer",
+                author: "Dr. Hendra Gunawan, Sp.JP",
+                year: 2023,
+                category: "penyakit",
+                description: "Pembahasan mendalam tentang faktor risiko penyakit jantung koroner dan strategi pencegahan primer.",
+                pages: 32,
+                size: "3.2 MB",
+                icon: "fas fa-heart",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1650
+            },
+            {
+                id: 12,
+                title: "ASI Eksklusif: Dampak Jangka Panjang pada Perkembangan Anak",
+                author: "Dr. Ani Lestari, Sp.A",
+                year: 2023,
+                category: "gizi",
+                description: "Studi longitudinal tentang dampak pemberian ASI eksklusif terhadap perkembangan anak.",
+                pages: 21,
+                size: "2.1 MB",
+                icon: "fas fa-baby",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1420
+            },
+            {
+                id: 13,
+                title: "Osteoporosis pada Perempuan Pasca-Menopause",
+                author: "Dr. Linda Hartati, Sp.PD-KR",
+                year: 2022,
+                category: "penyakit",
+                description: "Strategi pencegahan dan penanganan osteoporosis pada perempuan pasca-menopause.",
+                pages: 23,
+                size: "2.3 MB",
+                icon: "fas fa-bone",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 760
+            },
+            {
+                id: 14,
+                title: "Kanker Kulit: Perlindungan dari Paparan Sinar UV",
+                author: "Dr. Rina Melati, Sp.KK",
+                year: 2023,
+                category: "pencegahan",
+                description: "Panduan komprehensif tentang pencegahan kanker kulit melalui perlindungan dari sinar UV.",
+                pages: 17,
+                size: "1.7 MB",
+                icon: "fas fa-sun",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 690
+            },
+            {
+                id: 15,
+                title: "Dukungan Sosial dan Kesehatan Mental Remaja",
+                author: "Dr. Fajar Nugroho, Sp.KJ",
+                year: 2023,
+                category: "jiwa",
+                description: "Penelitian tentang peran dukungan sosial terhadap kesehatan mental remaja.",
+                pages: 26,
+                size: "2.6 MB",
+                icon: "fas fa-user-friends",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1150
+            },
+            {
+                id: 16,
+                title: "Aktivitas Fisik Ringan: Manfaat bagi Kesehatan Metabolik",
+                author: "Dr. Yoga Pratama, Sp.KO",
+                year: 2022,
+                category: "olahraga",
+                description: "Studi tentang manfaat aktivitas fisik ringan seperti berjalan kaki bagi kesehatan.",
+                pages: 14,
+                size: "1.4 MB",
+                icon: "fas fa-walking",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 810
+            },
+            {
+                id: 17,
+                title: "Asma Bronkial: Manajemen Jangka Panjang",
+                author: "Dr. Bayu Setiawan, Sp.P",
+                year: 2023,
+                category: "penyakit",
+                description: "Panduan manajemen asma bronkial jangka panjang berdasarkan GINA 2023.",
+                pages: 27,
+                size: "2.7 MB",
+                icon: "fas fa-allergies",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 940
+            },
+            {
+                id: 18,
+                title: "Obesitas Anak: Intervensi Berbasis Keluarga",
+                author: "Dr. Indah Permatasari, Sp.A",
+                year: 2023,
+                category: "gizi",
+                description: "Strategi intervensi obesitas anak yang melibatkan seluruh anggota keluarga.",
+                pages: 22,
+                size: "2.2 MB",
+                icon: "fas fa-weight",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 720
+            },
+            {
+                id: 19,
+                title: "Glaukoma: Deteksi Dini dan Penanganan",
+                author: "Dr. Anita Sari, Sp.M",
+                year: 2022,
+                category: "penyakit",
+                description: "Update tentang deteksi dini dan penanganan glaukoma untuk mencegah kebutaan.",
+                pages: 20,
+                size: "2.0 MB",
+                icon: "fas fa-eye",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 580
+            },
+            {
+                id: 20,
+                title: "Berhenti Merokok: Strategi Berbasis Bukti",
+                author: "Dr. Agus Santoso, Sp.PD",
+                year: 2023,
+                category: "pencegahan",
+                description: "Strategi berbasis bukti untuk berhenti merokok, meliputi terapi dan konseling.",
+                pages: 24,
+                size: "2.4 MB",
+                icon: "fas fa-smoking-ban",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                downloadCount: 1320
+            }
+        ];
+
+        // State Management
+        const appState = {
+            totalDownloads: 0,
+            totalBooks: 0,
+            totalUsers: 0,
+            currentFilter: 'all',
+            searchQuery: '',
+            currentPreviewArticle: null
+        };
+
+        // DOM Elements
+        const DOM = {
+            loadingScreen: document.getElementById('loadingScreen'),
+            spotlightBtn: document.getElementById('spotlightBtn'),
+            spotlightOverlay: document.getElementById('spotlightOverlay'),
+            spotlightInput: document.getElementById('spotlightInput'),
+            closeSpotlight: document.getElementById('closeSpotlight'),
+            searchResults: document.getElementById('searchResults'),
+            searchSuggestions: document.getElementById('searchSuggestions'),
+            whatsappFloat: document.getElementById('whatsappFloat'),
+            whatsappPopup: document.getElementById('whatsappPopup'),
+            closeWhatsapp: document.getElementById('closeWhatsapp'),
+            navbar: document.getElementById('navbar'),
+            homeLogo: document.getElementById('homeLogo'),
+            articlesGrid: document.getElementById('articlesGrid'),
+            filterButtons: document.querySelectorAll('.filter-btn'),
+            pdfPreviewModal: document.getElementById('pdfPreviewModal'),
+            pdfPreviewClose: document.getElementById('pdfPreviewClose'),
+            pdfModalClose: document.getElementById('pdfModalClose'),
+            pdfModalDownload: document.getElementById('pdfModalDownload'),
+            pdfPreviewTitle: document.getElementById('pdfPreviewTitle'),
+            pdfLoadingTitle: document.getElementById('pdfLoadingTitle'),
+            pdfViewerIframe: document.getElementById('pdfViewerIframe'),
+            pdfViewerLoading: document.getElementById('pdfViewerLoading'),
+            totalArticlesHealth: document.getElementById('totalArticlesHealth'),
+            totalAuthorsHealth: document.getElementById('totalAuthorsHealth'),
+            totalPagesHealth: document.getElementById('totalPagesHealth'),
+            totalDownloadsHealth: document.getElementById('totalDownloadsHealth'),
+            filterCount: document.querySelector('.filter-count')
+        };
+
+        // Inisialisasi Aplikasi
+        class HealthArticlesApp {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.initEventListeners();
+                this.generateArticles();
+                this.initFilter();
+                this.updateStatistics();
+                this.initNavbarScroll();
+                this.initLoadingScreen();
+                
+                // Load state dari localStorage
+                this.loadAppState();
+                
+                console.log('Health Articles App - Inisialisasi sukses');
+            }
+            
+            initEventListeners() {
+                // Spotlight Search
+                if (DOM.spotlightBtn) {
+                    DOM.spotlightBtn.addEventListener('click', () => this.showSpotlight());
+                }
+                
+                if (DOM.closeSpotlight) {
+                    DOM.closeSpotlight.addEventListener('click', () => this.hideSpotlight());
+                }
+                
+                if (DOM.spotlightInput) {
+                    DOM.spotlightInput.addEventListener('input', (e) => this.handleSearchInput(e));
+                }
+                
+                // Klik di luar spotlight untuk menutup
+                if (DOM.spotlightOverlay) {
+                    DOM.spotlightOverlay.addEventListener('click', (e) => {
+                        if (e.target === DOM.spotlightOverlay) {
+                            this.hideSpotlight();
+                        }
+                    });
+                }
+                
+                // WhatsApp
+                if (DOM.whatsappFloat) {
+                    DOM.whatsappFloat.addEventListener('click', () => this.toggleWhatsappPopup());
+                }
+                
+                if (DOM.closeWhatsapp) {
+                    DOM.closeWhatsapp.addEventListener('click', () => this.hideWhatsappPopup());
+                }
+                
+                // Klik di luar WhatsApp popup untuk menutup
+                document.addEventListener('click', (e) => {
+                    if (DOM.whatsappPopup && !DOM.whatsappPopup.contains(e.target) && 
+                        DOM.whatsappFloat && !DOM.whatsappFloat.contains(e.target)) {
+                        this.hideWhatsappPopup();
+                    }
+                });
+                
+                // PDF Preview
+                if (DOM.pdfPreviewClose) {
+                    DOM.pdfPreviewClose.addEventListener('click', () => this.closePdfPreview());
+                }
+                
+                if (DOM.pdfModalClose) {
+                    DOM.pdfModalClose.addEventListener('click', () => this.closePdfPreview());
+                }
+                
+                // Klik di luar modal PDF untuk menutup
+                if (DOM.pdfPreviewModal) {
+                    DOM.pdfPreviewModal.addEventListener('click', (e) => {
+                        if (e.target === DOM.pdfPreviewModal) {
+                            this.closePdfPreview();
+                        }
+                    });
+                }
+                
+                // Navbar scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        DOM.navbar.classList.add('scrolled');
+                    } else {
+                        DOM.navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+            
+            generateArticles() {
+                const articlesHTML = healthArticles.map(article => `
+                    <div class="article-card" data-category="${article.category}" data-id="${article.id}">
+                        <div class="health-icon">
+                            <i class="${article.icon}"></i>
+                        </div>
+                        <div class="article-header">
+                            <h3 class="article-title">${article.title}</h3>
+                            <div class="article-meta">
+                                <span class="article-author">${article.author}</span>
+                                <span class="article-year">${article.year}</span>
+                            </div>
+                        </div>
+                        <div class="article-content">
+                            <p class="article-description">${article.description}</p>
+                            <div class="article-stats">
+                                <div class="article-pages">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>${article.pages} halaman</span>
+                                </div>
+                                <div class="article-size">
+                                    <i class="fas fa-download"></i>
+                                    <span>${article.size}</span>
+                                </div>
+                            </div>
+                            <div class="article-actions">
+                                <button class="btn btn-preview" data-id="${article.id}" data-title="${article.title}" data-pdf="${article.pdfUrl}">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button class="btn btn-download" data-id="${article.id}" data-title="${article.title}" data-pdf="${article.pdfUrl}">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                DOM.articlesGrid.innerHTML = articlesHTML;
+                
+                // Tambahkan event listener untuk tombol preview dan download
+                this.initArticleButtons();
+            }
+            
+            initArticleButtons() {
+                // Preview buttons
+                document.querySelectorAll('.btn-preview').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const articleId = button.getAttribute('data-id');
+                        const articleTitle = button.getAttribute('data-title');
+                        const pdfUrl = button.getAttribute('data-pdf');
+                        this.showPdfPreview(articleId, articleTitle, pdfUrl);
+                    });
+                });
+                
+                // Download buttons
+                document.querySelectorAll('.btn-download').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const articleId = button.getAttribute('data-id');
+                        const articleTitle = button.getAttribute('data-title');
+                        const pdfUrl = button.getAttribute('data-pdf');
+                        this.downloadArticle(articleId, articleTitle, pdfUrl);
+                    });
+                });
+                
+                // Card click (optional)
+                document.querySelectorAll('.article-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.closest('.btn-preview') && !e.target.closest('.btn-download')) {
+                            const articleId = card.getAttribute('data-id');
+                            const article = healthArticles.find(a => a.id == articleId);
+                            if (article) {
+                                this.showPdfPreview(article.id, article.title, article.pdfUrl);
+                            }
+                        }
+                    });
+                });
+            }
+            
+            initFilter() {
+                DOM.filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Hapus active class dari semua tombol
+                        DOM.filterButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Tambah active class ke tombol yang diklik
+                        button.classList.add('active');
+                        
+                        const filterValue = button.getAttribute('data-filter');
+                        appState.currentFilter = filterValue;
+                        
+                        // Filter artikel
+                        this.filterArticles(filterValue);
+                    });
+                });
+            }
+            
+            filterArticles(filterValue) {
+                const articles = document.querySelectorAll('.article-card');
+                let visibleCount = 0;
+                
+                articles.forEach(article => {
+                    const category = article.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || category === filterValue) {
+                        article.style.display = 'block';
+                        setTimeout(() => {
+                            article.style.opacity = '1';
+                            article.style.transform = 'translateY(0)';
+                        }, 100);
+                        visibleCount++;
+                    } else {
+                        article.style.opacity = '0';
+                        article.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            article.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Update count
+                if (DOM.filterCount) {
+                    DOM.filterCount.textContent = `${visibleCount} Artikel`;
+                }
+            }
+            
+            updateStatistics() {
+                // Hitung total statistik
+                const totalArticles = healthArticles.length;
+                const totalAuthors = new Set(healthArticles.map(article => article.author)).size;
+                const totalPages = healthArticles.reduce((sum, article) => sum + article.pages, 0);
+                const totalDownloads = healthArticles.reduce((sum, article) => sum + article.downloadCount, 0);
+                
+                // Update statistik global dari localStorage
+                const globalStats = JSON.parse(localStorage.getItem('maktabahStats')) || {
+                    totalBooks: 0,
+                    totalUsers: 0,
+                    totalDownloads: 0
+                };
+                
+                // Animasikan statistik
+                this.animateCounter(DOM.totalArticlesHealth, totalArticles, 0, 2000);
+                this.animateCounter(DOM.totalAuthorsHealth, totalAuthors, 0, 2000);
+                this.animateCounter(DOM.totalPagesHealth, totalPages, 0, 2000);
+                this.animateCounter(DOM.totalDownloadsHealth, totalDownloads, 0, 2000);
+                
+                // Update global stats
+                appState.totalBooks = globalStats.totalBooks || 50000;
+                appState.totalUsers = globalStats.totalUsers || 25000;
+                appState.totalDownloads = globalStats.totalDownloads || 1200000;
+            }
+            
+            animateCounter(element, target, current, duration) {
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = this.formatNumber(target);
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = this.formatNumber(Math.floor(current));
+                    }
+                }, 16);
+            }
+            
+            formatNumber(num) {
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1) + 'M';
+                } else if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return num.toString();
+            }
+            
+            showPdfPreview(articleId, articleTitle, pdfUrl) {
+                appState.currentPreviewArticle = { id: articleId, title: articleTitle, pdfUrl };
+                
+                // Update modal title
+                DOM.pdfPreviewTitle.textContent = articleTitle;
+                DOM.pdfLoadingTitle.textContent = `Memuat: ${articleTitle}`;
+                
+                // Tampilkan loading, sembunyikan iframe
+                DOM.pdfViewerLoading.style.display = 'flex';
+                DOM.pdfViewerIframe.style.display = 'none';
+                
+                // Tampilkan modal
+                DOM.pdfPreviewModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Set iframe source setelah delay untuk simulasi loading
+                setTimeout(() => {
+                    DOM.pdfViewerIframe.src = pdfUrl;
+                    
+                    // Ketika iframe selesai load
+                    DOM.pdfViewerIframe.onload = () => {
+                        setTimeout(() => {
+                            DOM.pdfViewerLoading.style.display = 'none';
+                            DOM.pdfViewerIframe.style.display = 'block';
+                        }, 500);
+                    };
+                }, 1000);
+                
+                // Update download button
+                DOM.pdfModalDownload.onclick = () => {
+                    this.downloadArticle(articleId, articleTitle, pdfUrl);
+                };
+            }
+            
+            closePdfPreview() {
+                DOM.pdfPreviewModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Reset iframe
+                DOM.pdfViewerIframe.src = '';
+                appState.currentPreviewArticle = null;
+            }
+            
+            downloadArticle(articleId, articleTitle, pdfUrl) {
+                // Simulasi download
+                const article = healthArticles.find(a => a.id == articleId);
+                if (article) {
+                    // Update download count lokal
+                    article.downloadCount++;
+                    
+                    // Update statistik
+                    this.updateStatistics();
+                    
+                    // Update statistik global di localStorage
+                    const globalStats = JSON.parse(localStorage.getItem('maktabahStats')) || {
+                        totalBooks: 50000,
+                        totalUsers: 25000,
+                        totalDownloads: 1200000
+                    };
+                    
+                    globalStats.totalDownloads++;
+                    localStorage.setItem('maktabahStats', JSON.stringify(globalStats));
+                    
+                    // Simulasi download dengan membuka tab baru
+                    window.open(pdfUrl, '_blank');
+                    
+                    // Tampilkan notifikasi
+                    this.showDownloadNotification(articleTitle);
+                }
+            }
+            
+            showDownloadNotification(title) {
+                // Buat elemen notifikasi
+                const notification = document.createElement('div');
+                notification.className = 'download-notification';
+                notification.innerHTML = `
+                    <div style="position: fixed; bottom: 100px; right: 30px; background: rgba(0, 204, 153, 0.9); color: white; padding: 1rem 1.5rem; border-radius: 10px; z-index: 10000; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        <i class="fas fa-check-circle"></i>
+                        <span>${title} sedang didownload...</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Hapus notifikasi setelah 3 detik
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            // Spotlight Search Functions
+            showSpotlight() {
+                DOM.spotlightOverlay.classList.add('active');
+                DOM.spotlightInput.focus();
+            }
+            
+            hideSpotlight() {
+                DOM.spotlightOverlay.classList.remove('active');
+                DOM.spotlightInput.value = '';
+                DOM.searchResults.innerHTML = '';
+            }
+            
+            handleSearchInput(e) {
+                const query = e.target.value.toLowerCase().trim();
+                appState.searchQuery = query;
+                
+                if (query.length === 0) {
+                    DOM.searchResults.innerHTML = '';
+                    return;
+                }
+                
+                // Filter artikel berdasarkan query
+                const results = healthArticles.filter(article => 
+                    article.title.toLowerCase().includes(query) || 
+                    article.author.toLowerCase().includes(query) ||
+                    article.description.toLowerCase().includes(query) ||
+                    article.category.toLowerCase().includes(query)
+                );
+                
+                this.displaySearchResults(results, query);
+            }
+            
+            displaySearchResults(results, query) {
+                if (results.length === 0) {
+                    DOM.searchResults.innerHTML = `
+                        <div class="search-result-item">
+                            <div class="search-result-title">Tidak ditemukan artikel untuk "${query}"</div>
+                            <div class="search-result-category">Coba kata kunci lain</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const resultsHTML = results.map(article => {
+                    // Highlight keyword dalam hasil
+                    const highlightedTitle = this.highlightText(article.title, query);
+                    const highlightedAuthor = this.highlightText(article.author, query);
+                    
+                    return `
+                        <div class="search-result-item" data-id="${article.id}">
+                            <div class="search-result-title">${highlightedTitle}</div>
+                            <div class="search-result-category">${article.category.toUpperCase()}</div>
+                            <div class="search-result-author">${highlightedAuthor}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                DOM.searchResults.innerHTML = resultsHTML;
+                
+                // Tambahkan event listener untuk hasil pencarian
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const id = e.currentTarget.dataset.id;
+                        const article = healthArticles.find(a => a.id == id);
+                        if (article) {
+                            this.showPdfPreview(article.id, article.title, article.pdfUrl);
+                            this.hideSpotlight();
+                        }
+                    });
+                });
+            }
+            
+            highlightText(text, query) {
+                if (!query) return text;
+                
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<span class="highlight">$1</span>');
+            }
+            
+            // WhatsApp Functions
+            toggleWhatsappPopup() {
+                if (DOM.whatsappPopup.classList.contains('active')) {
+                    this.hideWhatsappPopup();
+                } else {
+                    this.showWhatsappPopup();
+                }
+            }
+            
+            showWhatsappPopup() {
+                DOM.whatsappPopup.classList.add('active');
+            }
+            
+            hideWhatsappPopup() {
+                DOM.whatsappPopup.classList.remove('active');
+            }
+            
+            initNavbarScroll() {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        DOM.navbar.classList.add('scrolled');
+                    } else {
+                        DOM.navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+            
+            initLoadingScreen() {
+                setTimeout(() => {
+                    DOM.loadingScreen.style.opacity = '0';
+                    DOM.loadingScreen.style.visibility = 'hidden';
+                }, 1500);
+            }
+            
+            loadAppState() {
+                const savedState = localStorage.getItem('maktabahHealthState');
+                if (savedState) {
+                    Object.assign(appState, JSON.parse(savedState));
+                }
+            }
+            
+            saveAppState() {
+                localStorage.setItem('maktabahHealthState', JSON.stringify(appState));
+            }
+        }
+
+        // Inisialisasi aplikasi saat DOM siap
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new HealthArticlesApp();
+            
+            // Tambahkan class untuk animasi saat halaman siap
+            document.body.classList.add('loaded');
+        });
+
+        // Export untuk penggunaan modular
+        if (typeof module !== 'undefined' && module.exports) {
+            module.exports = { HealthArticlesApp, healthArticles, appState };
+        }
+    </script>
+</body>
+</html>
