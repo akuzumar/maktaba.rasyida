@@ -37,7 +37,7 @@
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             
             /* Pattern Overlay (Geometris Halus) */
-            --pattern-overlay: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5a059' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            --pattern-overlay: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5a059' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         * {
@@ -83,7 +83,7 @@
         }
 
         /* =========================================
-           LOADING SCREEN (Sesuai index.html)
+           LOADING SCREEN
            ========================================= */
         .loading-screen {
             position: fixed;
@@ -143,7 +143,7 @@
         }
 
         /* =========================================
-           NAVBAR (Responsif seperti index.html)
+           NAVBAR
            ========================================= */
         .navbar {
             position: fixed;
@@ -238,7 +238,7 @@
         }
 
         .nav-link::after {
-            content: '♦'; /* Diamond symbol */
+            content: '♦';
             position: absolute;
             bottom: -5px;
             left: 50%;
@@ -311,7 +311,7 @@
             box-shadow: var(--gold-shadow);
         }
 
-        /* HAMBURGER MENU (MOBILE TOGGLE) - Sama seperti index.html */
+        /* HAMBURGER MENU (MOBILE TOGGLE) */
         .hamburger {
             display: none;
             cursor: pointer;
@@ -331,7 +331,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Hamburger Active State Animation */
         .hamburger.active span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
@@ -345,7 +344,7 @@
         }
 
         /* =========================================
-           HEADER ARTIKEL KESEHATAN (Responsif)
+           HEADER ARTIKEL KESEHATAN
            ========================================= */
         .health-header {
             padding: 120px 2rem 3rem;
@@ -404,7 +403,7 @@
         }
 
         /* =========================================
-           STATS CONTAINER (Responsif)
+           STATS CONTAINER
            ========================================= */
         .health-stats {
             display: grid;
@@ -460,7 +459,7 @@
         }
 
         /* =========================================
-           BREADCRUMB (Responsif)
+           BREADCRUMB
            ========================================= */
         .breadcrumb {
             max-width: 1400px;
@@ -499,7 +498,7 @@
         }
 
         /* =========================================
-           ARTICLES CONTAINER (Responsif)
+           ARTICLES CONTAINER
            ========================================= */
         .articles-container {
             max-width: 1400px;
@@ -769,7 +768,7 @@
         }
 
         /* =========================================
-           SPOTLIGHT SEARCH MODAL (Responsif)
+           SPOTLIGHT SEARCH MODAL
            ========================================= */
         .spotlight-modal {
             position: fixed;
@@ -917,7 +916,7 @@
         }
 
         /* =========================================
-           MODAL PREVIEW (Responsif)
+           MODAL PREVIEW
            ========================================= */
         .preview-modal {
             position: fixed;
@@ -987,7 +986,7 @@
         }
 
         /* =========================================
-           FOOTER (Classic Dark) - Responsif
+           FOOTER
            ========================================= */
         .footer {
             background: var(--secondary-color);
@@ -1090,7 +1089,7 @@
         .article-card:nth-child(10) { animation-delay: 1.0s; }
 
         /* =========================================
-           RESPONSIVE DESIGN - Tablet & Desktop
+           RESPONSIVE DESIGN
            ========================================= */
         @media (min-width: 768px) {
             .health-header {
@@ -1185,7 +1184,6 @@
         }
 
         @media (max-width: 768px) {
-            /* NAVBAR MOBILE STYLES (Sama seperti index.html) */
             .hamburger {
                 display: flex;
             }
@@ -1222,7 +1220,7 @@
                 right: 0;
             }
 
-            /* Nav Links di Mobile */
+            /* Nav Links Mobile */
             .nav-item {
                 width: 100%;
                 margin-bottom: 0.5rem;
@@ -1273,7 +1271,6 @@
                 font-size: 0.9rem;
             }
             
-            /* Remove margin for mobile */
             .health-header {
                 margin-top: 60px;
             }
@@ -1312,9 +1309,6 @@
     </style>
 </head>
 <body>
-    
-
-    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo" id="homeLogo" style="text-decoration:none;">
@@ -1407,7 +1401,6 @@
         </div>
     </nav>
 
-    <!-- Header Artikel Kesehatan -->
     <header class="health-header">
         <div class="breadcrumb">
             <div class="breadcrumb-links">
@@ -1415,7 +1408,7 @@
                 <span class="breadcrumb-separator">/</span>
                 <a href="#" class="breadcrumb-link">Artikel</a>
                 <span class="breadcrumb-separator">/</span>
-                <span class="breadcrumb-current">Kesehatan</span>
+                <span class="breadcrumb-current">Kehutanan</span>
             </div>
         </div>
         
@@ -1424,15 +1417,15 @@
         
         <div class="health-stats">
             <div class="stat-card">
-                <div class="stat-number" id="totalArticles">20</div>
+                <div class="stat-number" id="totalArticles">0</div>
                 <div class="stat-label">Artikel Tersedia</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="totalAuthors">15</div>
+                <div class="stat-number" id="totalAuthors">0</div>
                 <div class="stat-label">Penulis Ahli</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="totalPages">850</div>
+                <div class="stat-number" id="totalPages">0</div>
                 <div class="stat-label">Total Halaman</div>
             </div>
             <div class="stat-card">
@@ -1442,9 +1435,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="articles-container">
-        <!-- Filter Section -->
         <section class="filter-section">
             <div class="filter-header">
                 <h2 class="filter-title"><i class="fas fa-filter"></i> Filter Kategori Kesehatan</h2>
@@ -1461,13 +1452,10 @@
             </div>
         </section>
 
-        <!-- Articles Grid -->
         <section class="articles-grid" id="articlesGrid">
-            <!-- Artikel akan di-generate oleh JavaScript -->
-        </section>
+            </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
@@ -1501,16 +1489,16 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2023 Maktabah Rasyida. Hak cipta dilindungi.</p>
+            <div class="footer-bottom">
+            <div class="footer-bottom">
+            <p>&copy; 2026 Maktabah Rasyida. Hak cipta dilindungi.</p>
             <div class="footer-bottom-links">
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">Syarat Penggunaan</a>
-                <a href="#">Peta Situs</a>
+                <p style="color: #ffffff;">Copyright © 2026 Fairuz Zumar/Makna Desain. Seluruh Hak Cipta Dilindungi. </p>
             </div>
+        </div>
         </div>
     </footer>
 
-    <!-- Spotlight Search Modal -->
     <div class="spotlight-modal" id="spotlightModal">
         <div class="spotlight-content">
             <div class="spotlight-header">
@@ -1529,9 +1517,16 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
     <script>
-        // Data Artikel Kesehatan (Sama seperti sebelumnya)
+        // ==============================================
+        // KONFIGURASI UTAMA
+        // ==============================================
+        
+        // Key untuk penyimpanan LocalStorage
+        const STORAGE_KEY = 'maktabah_health_downloads';
+        const GLOBAL_STATS_KEY = 'maktabah_rasyida_global_stats';
+        
+        // Data Artikel Kesehatan (Hardcoded - Sumber Kebenaran Konten)
         let healthArticles = [
             {
                 id: 1,
@@ -1823,7 +1818,77 @@
             navMenu: document.getElementById('navMenu')
         };
 
-        // Helper Functions
+        // ==============================================
+        // SISTEM STATISTIK GLOBAL INTEGRASI
+        // ==============================================
+        
+        class GlobalStatsManager {
+            constructor() {
+                this.key = GLOBAL_STATS_KEY;
+                this.initializeGlobalStats();
+            }
+            
+            initializeGlobalStats() {
+                let stats = localStorage.getItem(this.key);
+                if (!stats) {
+                    const initialStats = {
+                        collections: {
+                            kesehatan: 0,
+                            kehutanan: 0,
+                            pendidikan: 0,
+                            teknologi: 0,
+                            agama: 0,
+                            novel: 0,
+                            cerita: 0,
+                            skripsi: 0,
+                            tesis: 0,
+                            disertasi: 0
+                        },
+                        totalVisitors: 0,
+                        totalDownloads: 0,
+                        lastVisitorTime: 0,
+                        visitorSessions: []
+                    };
+                    localStorage.setItem(this.key, JSON.stringify(initialStats));
+                }
+            }
+            
+            getStats() {
+                const stats = localStorage.getItem(this.key);
+                return stats ? JSON.parse(stats) : null;
+            }
+            
+            saveStats(stats) {
+                localStorage.setItem(this.key, JSON.stringify(stats));
+            }
+            
+            // Laporkan jumlah koleksi ke statistik global
+            reportCollectionCount(pageId, count) {
+                let stats = this.getStats();
+                if (stats) {
+                    stats.collections[pageId] = count;
+                    this.saveStats(stats);
+                    return true;
+                }
+                return false;
+            }
+            
+            // Laporkan download ke statistik global
+            reportDownload(count = 1) {
+                let stats = this.getStats();
+                if (stats) {
+                    stats.totalDownloads += count;
+                    this.saveStats(stats);
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        // ==============================================
+        // HELPER FUNCTIONS
+        // ==============================================
+        
         const Helper = {
             // Calculate total unique authors
             calculateUniqueAuthors: () => {
@@ -1860,35 +1925,80 @@
             // Animate counter
             animateCounter: (element, target) => {
                 const current = parseInt(element.textContent) || 0;
+                if (target === 0) {
+                   element.textContent = 0;
+                   return;
+                }
+                
                 const increment = Math.ceil((target - current) / 30);
                 let currentValue = current;
 
                 const timer = setInterval(() => {
                     currentValue += increment;
-                    if (currentValue >= target) {
+                    if ((increment > 0 && currentValue >= target) || (increment < 0 && currentValue <= target)) {
                         element.textContent = target;
                         clearInterval(timer);
                     } else {
                         element.textContent = currentValue;
                     }
                 }, 50);
+            },
+
+            // Memuat data download dari LocalStorage
+            loadDownloadsFromStorage: () => {
+                const storedData = localStorage.getItem(STORAGE_KEY);
+                if (storedData) {
+                    try {
+                        const parsedData = JSON.parse(storedData);
+                        healthArticles.forEach(article => {
+                            if (parsedData[article.id] !== undefined) {
+                                article.downloadCount = parsedData[article.id];
+                            }
+                        });
+                    } catch (e) {
+                        console.error("Gagal memuat data unduhan:", e);
+                    }
+                }
+            },
+
+            // Menyimpan data download ke LocalStorage
+            saveDownloadsToStorage: () => {
+                const dataToSave = {};
+                healthArticles.forEach(article => {
+                    if (article.downloadCount > 0) {
+                        dataToSave[article.id] = article.downloadCount;
+                    }
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
             }
         };
 
-        // Initialize Application
+        // ==============================================
+        // KELAS UTAMA APLIKASI
+        // ==============================================
+        
         class HealthArticlesApp {
             constructor() {
+                this.globalStats = new GlobalStatsManager();
                 this.init();
             }
 
             init() {
                 this.initLoadingScreen();
+                
+                // Muat data dari local storage
+                Helper.loadDownloadsFromStorage();
+                
+                // Update statistik dan render artikel
                 this.updateStatistics();
                 this.generateArticles();
+                
                 this.initEventListeners();
                 this.initMobileMenu();
                 this.initNavbar();
-                console.log('Health Articles App Initialized');
+                
+                // Laporkan ke statistik global
+                this.reportToGlobalStats();
             }
 
             initLoadingScreen() {
@@ -1917,15 +2027,13 @@
                 const navLinks = document.querySelectorAll('.nav-link');
                 navLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
-                        // Cek jika kita di mode mobile/tablet (lebar < 768px)
                         if (window.innerWidth <= 768) {
                             const parent = link.parentElement;
                             const dropdown = parent.querySelector('.dropdown-menu');
                             
-                            // Jika item ini punya dropdown
                             if (dropdown) {
-                                e.preventDefault(); // Jangan refresh/navigasi
-                                parent.classList.toggle('active'); // Buka/tutup class active
+                                e.preventDefault();
+                                parent.classList.toggle('active');
                             }
                         }
                     });
@@ -1939,7 +2047,6 @@
                         const filter = e.target.dataset.filter;
                         this.filterArticles(filter);
                         
-                        // Update active state
                         DOM.filterTags.forEach(t => t.classList.remove('active'));
                         e.target.classList.add('active');
                     });
@@ -1952,7 +2059,6 @@
                         const filter = link.dataset.filter;
                         this.filterArticles(filter);
                         
-                        // Update active state in main filter
                         DOM.filterTags.forEach(t => {
                             t.classList.remove('active');
                             if (t.dataset.filter === filter) {
@@ -1991,7 +2097,6 @@
                         this.performSearch(e.target.value);
                     });
                     
-                    // Enter key to search
                     DOM.searchInput.addEventListener('keyup', (e) => {
                         if (e.key === 'Enter') {
                             this.performSearch(e.target.value);
@@ -2008,6 +2113,8 @@
             }
 
             generateArticles() {
+                DOM.articlesGrid.innerHTML = '';
+                
                 const articlesHTML = healthArticles.map(article => `
                     <div class="article-card" data-category="${article.category}" data-id="${article.id}">
                         <div class="article-header">
@@ -2099,7 +2206,6 @@
                         article.style.display = 'block';
                         visibleCount++;
                         
-                        // Add animation
                         article.style.animation = 'fadeInUp 0.6s ease forwards';
                         article.style.opacity = '0';
                         article.style.transform = 'translateY(20px)';
@@ -2117,15 +2223,11 @@
                     }
                 });
 
-                // Update filter count
                 DOM.filterCount.textContent = `${visibleCount} Artikel`;
-
-                // Smooth scroll to articles grid
                 DOM.articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             previewArticle(article) {
-                // Create preview modal
                 const modalHTML = `
                     <div class="preview-modal" id="previewModal">
                         <div class="modal-content">
@@ -2157,7 +2259,7 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; flex-direction: column;">
-                                    <button onclick="app.downloadArticle(${article.id})" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border: none; border-radius: 8px; color: var(--bg-paper); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <button onclick="app.downloadArticleFromModal(${article.id})" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border: none; border-radius: 8px; color: var(--bg-paper); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                                         <i class="fas fa-download"></i> Download PDF
                                     </button>
                                     <button onclick="document.getElementById('previewModal').remove(); document.body.style.overflow = 'auto';" style="width: 100%; padding: 1rem; background: rgba(197, 160, 89, 0.1); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 8px; color: var(--text-secondary); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
@@ -2172,41 +2274,50 @@
                 document.body.insertAdjacentHTML('beforeend', modalHTML);
                 document.body.style.overflow = 'hidden';
 
-                // Add close event
                 document.getElementById('closePreviewModal').addEventListener('click', () => {
                     document.getElementById('previewModal').remove();
                     document.body.style.overflow = 'auto';
                 });
             }
 
+            downloadArticleFromModal(articleId) {
+                const article = healthArticles.find(a => a.id === articleId);
+                if (article) {
+                    this.downloadArticle(article);
+                }
+            }
+
             downloadArticle(article) {
-                // Update download count
+                // Update download count lokal
                 article.downloadCount++;
                 
-                // Update statistics
+                // Simpan ke local storage
+                Helper.saveDownloadsToStorage();
+                
+                // Update statistik lokal
                 this.updateStatistics();
                 
-                // Update article card
+                // Update tampilan artikel
                 this.updateArticleCard(article.id);
                 
-                // Create download notification
+                // Laporkan ke statistik global
+                this.reportDownloadToGlobal();
+                
+                // Tampilkan notifikasi
                 this.showNotification(`Mengunduh: ${article.title}`, 'success');
                 
-                // Simulate download with actual PDF
+                // Simulasi download
                 setTimeout(() => {
                     const link = document.createElement('a');
                     link.href = article.pdfUrl;
                     link.download = `${article.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-                    link.target = '_blank'; // Buka di tab baru jika PDF tidak bisa diunduh langsung
+                    link.target = '_blank';
                     
-                    // Untuk Chrome dan Firefox
                     if (link.download !== undefined) {
-                        // Browser mendukung download attribute
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
                     } else {
-                        // Fallback untuk browser lama
                         window.open(article.pdfUrl, '_blank');
                     }
                 }, 500);
@@ -2226,13 +2337,11 @@
             }
 
             updateStatistics() {
-                // Calculate statistics
                 const totalArticles = healthArticles.length;
                 const totalAuthors = Helper.calculateUniqueAuthors();
                 const totalPages = Helper.calculateTotalPages();
                 const totalDownloads = Helper.calculateTotalDownloads();
 
-                // Animate counters
                 Helper.animateCounter(DOM.totalArticles, totalArticles);
                 Helper.animateCounter(DOM.totalAuthors, totalAuthors);
                 Helper.animateCounter(DOM.totalPages, totalPages);
@@ -2275,7 +2384,6 @@
                 
                 DOM.searchResults.innerHTML = resultsHTML;
                 
-                // Add click events to search results
                 document.querySelectorAll('.search-result-item').forEach(item => {
                     item.addEventListener('click', () => {
                         const articleId = parseInt(item.dataset.id);
@@ -2297,15 +2405,12 @@
             }
 
             openArticleFromSearch(articleId) {
-                // Close spotlight
                 this.closeSpotlight();
                 
-                // Find and filter to show the article
                 const article = healthArticles.find(a => a.id === articleId);
                 if (article) {
                     this.filterArticles(article.category);
                     
-                    // Update active filter
                     DOM.filterTags.forEach(t => {
                         t.classList.remove('active');
                         if (t.dataset.filter === article.category) {
@@ -2313,13 +2418,11 @@
                         }
                     });
                     
-                    // Scroll to the article
                     setTimeout(() => {
                         const articleCard = document.querySelector(`.article-card[data-id="${articleId}"]`);
                         if (articleCard) {
                             articleCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             
-                            // Add highlight animation
                             articleCard.style.boxShadow = '0 0 0 3px var(--accent-color)';
                             setTimeout(() => {
                                 articleCard.style.boxShadow = '';
@@ -2357,7 +2460,6 @@
 
                 document.body.appendChild(notification);
 
-                // Add animation style
                 if (!document.querySelector('#notification-style')) {
                     const style = document.createElement('style');
                     style.id = 'notification-style';
@@ -2376,7 +2478,6 @@
                     document.head.appendChild(style);
                 }
 
-                // Remove notification after 3 seconds
                 setTimeout(() => {
                     notification.style.animation = 'slideInRight 0.3s ease reverse';
                     setTimeout(() => notification.remove(), 300);
@@ -2384,7 +2485,6 @@
             }
 
             initNavbar() {
-                // Add scroll effect
                 window.addEventListener('scroll', () => {
                     if (window.scrollY > 50) {
                         DOM.navbar.classList.add('scrolled');
@@ -2393,7 +2493,6 @@
                     }
                 });
 
-                // Initialize dropdowns for desktop
                 if (window.innerWidth > 768) {
                     document.querySelectorAll('.nav-item').forEach(item => {
                         const link = item.querySelector('.nav-link');
@@ -2415,64 +2514,68 @@
                     });
                 }
             }
+
+            // ==============================================
+            // INTEGRASI STATISTIK GLOBAL
+            // ==============================================
+            
+            reportToGlobalStats() {
+                // Laporkan jumlah artikel ke statistik global
+                this.globalStats.reportCollectionCount('kesehatan', healthArticles.length);
+            }
+            
+            reportDownloadToGlobal() {
+                // Laporkan download ke statistik global
+                this.globalStats.reportDownload(1);
+            }
         }
 
-        // Initialize app when DOM is loaded
+        // ==============================================
+        // INISIALISASI APLIKASI
+        // ==============================================
+        
         document.addEventListener('DOMContentLoaded', () => {
             window.app = new HealthArticlesApp();
-        });
-
-        // Expose functions for manual addition/removal of articles
-        window.healthArticlesManager = {
-            // Add a new article
-            addArticle: (article) => {
-                article.id = healthArticles.length > 0 ? Math.max(...healthArticles.map(a => a.id)) + 1 : 1;
-                article.downloadCount = article.downloadCount || 0;
-                healthArticles.push(article);
-                
-                // Regenerate articles
-                app.generateArticles();
-                
-                // Update statistics
-                app.updateStatistics();
-                
-                // Show notification
-                app.showNotification(`Artikel "${article.title}" berhasil ditambahkan!`, 'success');
-            },
             
-            // Remove an article by ID
-            removeArticle: (articleId) => {
-                const index = healthArticles.findIndex(a => a.id === articleId);
-                if (index !== -1) {
-                    const removedArticle = healthArticles[index];
-                    healthArticles.splice(index, 1);
-                    
-                    // Regenerate articles
+            // Ekspos fungsi untuk manajemen artikel
+            window.healthArticlesManager = {
+                addArticle: (article) => {
+                    article.id = healthArticles.length > 0 ? Math.max(...healthArticles.map(a => a.id)) + 1 : 1;
+                    article.downloadCount = article.downloadCount || 0;
+                    healthArticles.push(article);
                     app.generateArticles();
-                    
-                    // Update statistics
                     app.updateStatistics();
-                    
-                    // Show notification
-                    app.showNotification(`Artikel "${removedArticle.title}" berhasil dihapus!`, 'success');
+                    app.reportToGlobalStats(); // Update statistik global
+                    app.showNotification(`Artikel "${article.title}" berhasil ditambahkan!`, 'success');
+                },
+                
+                removeArticle: (articleId) => {
+                    const index = healthArticles.findIndex(a => a.id === articleId);
+                    if (index !== -1) {
+                        const removedArticle = healthArticles[index];
+                        healthArticles.splice(index, 1);
+                        app.generateArticles();
+                        app.updateStatistics();
+                        Helper.saveDownloadsToStorage();
+                        app.reportToGlobalStats(); // Update statistik global
+                        app.showNotification(`Artikel "${removedArticle.title}" berhasil dihapus!`, 'success');
+                    }
+                },
+                
+                getAllArticles: () => {
+                    return [...healthArticles];
+                },
+                
+                getStatistics: () => {
+                    return {
+                        totalArticles: healthArticles.length,
+                        totalAuthors: Helper.calculateUniqueAuthors(),
+                        totalPages: Helper.calculateTotalPages(),
+                        totalDownloads: Helper.calculateTotalDownloads()
+                    };
                 }
-            },
-            
-            // Get all articles
-            getAllArticles: () => {
-                return [...healthArticles];
-            },
-            
-            // Get statistics
-            getStatistics: () => {
-                return {
-                    totalArticles: healthArticles.length,
-                    totalAuthors: Helper.calculateUniqueAuthors(),
-                    totalPages: Helper.calculateTotalPages(),
-                    totalDownloads: Helper.calculateTotalDownloads()
-                };
-            }
-        };
+            };
+        });
     </script>
 </body>
 </html>
